@@ -34,6 +34,7 @@ public:
     ~PeopleSerializable();
 
 
+    vector<Faculty>* deserializeFacultyFromStream();
     vector<Student>* deserializeStudentsFromStream();
 
     //Extra overloaded method (for testing)

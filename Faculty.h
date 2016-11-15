@@ -20,7 +20,7 @@ public:
     Faculty(string name, string level, string department);
 
     //Called when constructed from existing data, sets id from data
-    Faculty(int id, string name, string level, string department, vector<int> adviseesIDS);
+    Faculty(int id, string name, string level, string department,  int* adviseeArr, int adviseeArrLength);
 
     ~Faculty();
 

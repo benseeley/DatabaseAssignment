@@ -24,6 +24,29 @@ PeopleSerializable::~PeopleSerializable() {
     }
 }
 
+vector<Faculty> *PeopleSerializable::deserializeFacultyFromStream() {
+    if(streamFlag == false){
+        throw invalid_argument("Stream is has not been set, must set file with \"openFile()\"");
+    }
+    if(!(readStream->is_open())){
+        readStream->open(dataFile.c_str());
+    }
+
+    vector<Faculty>* facVector = new vector<Faculty>;
+    string line = "";
+
+    while(getline(*readStream, line)){
+        if(line != ""){
+
+            facVector->push_back(deserializeFaculty(line));
+        }
+
+    }
+
+    //Create Student from Data
+    return facVector;
+}
+
 vector<Student>* PeopleSerializable::deserializeStudentsFromStream() {
 
     if(streamFlag == false){
@@ -38,17 +61,8 @@ vector<Student>* PeopleSerializable::deserializeStudentsFromStream() {
 
     while(getline(*readStream, line)){
         if(line != ""){
-            nlohmann::json j = nlohmann::json::parse(line);
 
-
-            int id = j.at("id");
-            string name = j.at("name");
-            string level = j.at("level");
-            string major = j.at("major");
-            double gpa = j.at("gpa");
-            int advisorID = j.at("advisorID");
-
-            studVector->push_back(Student(id, name, level, major, gpa, advisorID));
+            studVector->push_back(deserializeStudent(line));
         }
 
     }
@@ -84,14 +98,25 @@ Faculty PeopleSerializable::deserializeFaculty(std::string jString) {
     string department = j.at("department");
 
     //TODO: Json is returning bool (since id is 1) insdead of an array of ints;
-    if( == j.at("adviseesIDS").type()){
 
+    int numOfAdvisees = j.at("numOfAdvisees");
+    int* adviseeArr = new int[numOfAdvisees];;
+
+    if(0 == numOfAdvisees){
+        adviseeArr = 0;
+    }
+    else if(1 == numOfAdvisees){
+        *adviseeArr = j.at("adviseesIDS").back();
+    }
+    else {
+        vector<int> v = j.at("adviseesIDS");;
+        for(int i = 0; i < numOfAdvisees; i++){
+            *(adviseeArr + i) = v.at(i);
+        }
     }
 
-    cout << "VEC : "<< vec.size() << endl;
-
     //Create Student from Data
-    return Faculty(id, name, level, department, vector<int>(vec));
+    return Faculty(id, name, level, department, adviseeArr, numOfAdvisees);
 }
 
 
@@ -143,6 +168,8 @@ void PeopleSerializable::closeFile() {
 
     streamFlag = false;
 }
+
+
 
 
 
