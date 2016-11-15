@@ -14,7 +14,7 @@ namespace cpsc350
 {
 
     template <typename Elem>
-    using Iterator = typename DLinkedList<Elem>::Iterator;
+    using Iterator = typename DLinkedList<Elem>::DLinkedIterator;
 
     template <typename Elem>
     class NodeSequence : public DLinkedList<Elem>
@@ -23,8 +23,8 @@ namespace cpsc350
         NodeSequence();
         ~NodeSequence();
 
-        typename DLinkedList<Elem>::Iterator atIndex(int idx) const; //returns iterator at given index
-        int indexOf(const typename DLinkedList<Elem>::Iterator& p) const; //returns -1 if element not found
+        typename DLinkedList<Elem>::DLinkedIterator atIndex(int idx) const; //returns iterator at given index
+        int indexOf(const typename DLinkedList<Elem>::DLinkedIterator& p) const; //returns -1 if element not found
         Iterator<Elem> operator[](int idx)
         { return this->atIndex(idx); }
     };

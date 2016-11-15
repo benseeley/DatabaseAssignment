@@ -23,21 +23,21 @@ namespace cpsc350
             Node() : elem(), prev(NULL), next(NULL) {}
         };
     public:
-        class Iterator //iterator for DLinkedList
+        class DLinkedIterator //iterator for DLinkedList
         {
         public:
             Elem& operator*()
             { return node_->elem; }
-            bool operator==(const Iterator& pos) const
+            bool operator==(const DLinkedIterator& pos) const
             { return node_ == pos.node_; }
-            bool operator!=(const Iterator& pos) const
+            bool operator!=(const DLinkedIterator& pos) const
             { return node_ != pos.node_; }
-            Iterator& operator++()
+            DLinkedIterator& operator++()
             {
                 node_ = node_->next;
                 return *this;
             }
-            Iterator& operator--()
+            DLinkedIterator& operator--()
             {
                 node_ = node_->prev;
                 return *this;
@@ -46,7 +46,7 @@ namespace cpsc350
 
         private:
             Node* node_;
-            Iterator(Node* u)
+            DLinkedIterator(Node* u)
             { node_ = u; }
         };
 
@@ -55,14 +55,14 @@ namespace cpsc350
         virtual ~DLinkedList();
         int size() const;
         bool empty() const;
-        Iterator begin() const;
-        Iterator end() const;
+        DLinkedIterator begin() const;
+        DLinkedIterator end() const;
         void insertFront(const Elem& elem);
         void insertBack(const Elem& elem);
-        void insert(const Iterator& pos, const Elem& elem); //inserts e before p
+        void insert(const DLinkedIterator& pos, const Elem& elem); //inserts e before p
         void eraseFront();
         void eraseBack();
-        void erase(const Iterator& pos);
+        void erase(const DLinkedIterator& pos);
 
     private:
         int n_;
@@ -102,19 +102,19 @@ namespace cpsc350
     { return (n_ == 0); }
 
     template <typename Elem>
-    typename DLinkedList<Elem>::Iterator DLinkedList<Elem>::begin() const
+    typename DLinkedList<Elem>::DLinkedIterator DLinkedList<Elem>::begin() const
     {
 
-        return Iterator(header_->next); }
+        return DLinkedIterator(header_->next); }
 
     template <typename Elem>
-    typename DLinkedList<Elem>::Iterator DLinkedList<Elem>::end() const
+    typename DLinkedList<Elem>::DLinkedIterator DLinkedList<Elem>::end() const
     {
 
-        return Iterator(trailer_); }
+        return DLinkedIterator(trailer_); }
 
     template <typename Elem>
-    void DLinkedList<Elem>::insert(const DLinkedList<Elem>::Iterator &pos, const Elem& elem)
+    void DLinkedList<Elem>::insert(const DLinkedList<Elem>::DLinkedIterator &pos, const Elem& elem)
     {
         Node* w = pos.node_;
 
@@ -152,7 +152,7 @@ namespace cpsc350
     }
 
     template <typename Elem>
-    void DLinkedList<Elem>::erase(const DLinkedList<Elem>::Iterator &pos)
+    void DLinkedList<Elem>::erase(const DLinkedList<Elem>::DLinkedIterator &pos)
     {
         Node* v = pos.node_;
         Node* w = v->next;
