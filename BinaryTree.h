@@ -28,9 +28,10 @@ namespace cpsc350
         class Position
         {
         private:
-            Node* v;
+            Node* node_;
         public:
-            Position(Node* _v = NULL) : v(_v) {}
+            Position(Node* node = NULL);
+            Position()
 
         };
     };
