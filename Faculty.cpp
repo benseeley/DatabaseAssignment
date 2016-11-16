@@ -16,8 +16,16 @@ Faculty::Faculty(string name, string level, string department) : mID(++Total_IDS
 }
 
 
-Faculty::Faculty(int id, string name, string level, string department, vector<int> adviseesIDS) : mID(id), mName(name), mLevel(level), mDepartment(department) {
-    adviseesIDS = adviseesIDS;
+Faculty::Faculty(int id, string name, string level, string department, int* adviseeArr, int adviseeArrLength) : mID(id), mName(name), mLevel(level), mDepartment(department) {
+
+    //Adds advisees
+    if(adviseeArr != 0){
+
+        pAdviseesIDS = new vector<int>;
+        for (int i = 0; i < adviseeArrLength; ++i) {
+            pAdviseesIDS->push_back(*(adviseeArr + i));
+        }
+    }
 }
 
 
@@ -51,7 +59,10 @@ string Faculty::getJson() {
     j["name"] = mName;
     j["level"] = mLevel;
     j["department"] = mDepartment;
-    j["adviseesIDS"] = pAdviseesIDS;
+    j["numOfAdvisees"] = pAdviseesIDS->size();
+    j["adviseesIDS"] = *pAdviseesIDS;
+
+
 
     return j.dump();
 }
