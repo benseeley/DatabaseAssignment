@@ -53,7 +53,7 @@ namespace cpsc350
     public:
         DLinkedList();
         virtual ~DLinkedList();
-        DLinkedList(DLinkedList list);
+        DLinkedList(const DLinkedList<Elem>& list);
         int size() const;
         bool empty() const;
         DLinkedIterator begin() const;
@@ -95,7 +95,7 @@ namespace cpsc350
     }
 
     template <typename Elem>
-    DLinkedList<Elem>::DLinkedList(DLinkedList list)
+    DLinkedList<Elem>::DLinkedList(const DLinkedList<Elem>& list)
     {
         n_ = 0;
         header_ = new Node;
