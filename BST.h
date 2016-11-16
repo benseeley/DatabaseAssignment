@@ -9,7 +9,17 @@ template <typename Elem>
 class BST
 {
 public:
-    TreeNode
+    class TreeNode
+    {
+    private:
+        Elem elem;
+        TreeNode* left_;
+        TreeNode* right_;
+        TreeNode* parent_;
+
+    public:
+
+    };
 
 };
 

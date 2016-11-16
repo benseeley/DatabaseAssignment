@@ -10,6 +10,12 @@ class KeyValuePair
 {
 public:
     KeyValuePair();
+    ~KeyValuePair();
+
+    Key& key();
+    Value& value();
+
+
 };
 
 
