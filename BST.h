@@ -5,21 +5,28 @@
 #ifndef DATABASEASSIGNMENT_BST_H
 #define DATABASEASSIGNMENT_BST_H
 
+#include "stdlib.h"
+
 template <typename Elem>
 class BST
 {
-public:
-    class TreeNode
+private:
+    struct TreeNode
     {
-    private:
         Elem elem;
-        TreeNode* left_;
-        TreeNode* right_;
-        TreeNode* parent_;
-
-    public:
-
+        TreeNode* left;
+        TreeNode* right;
+        TreeNode* parent;
+        TreeNode(Elem data):elem(data),left(NULL),right(NULL),parent(NULL){}
     };
+
+
+
+public:
+
+    BST();
+    ~BST();
+
 
 };
 
