@@ -14,7 +14,7 @@ using namespace std;
 class Student{
 public:
     static int Total_IDS;
-    const int mID;
+    int mID;
     Student();
 
     //Called when constructing for FIRST time, sets id using static var
