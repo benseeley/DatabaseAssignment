@@ -57,7 +57,7 @@ void DatabaseController::consoleCommand() {
     }
     else if(command == "5"){
         //Given a student’s id, print the name and info of their faculty advisor TODO:@copp
-        
+
 
     }
     else if(command == "6"){
@@ -108,7 +108,7 @@ void DatabaseController::consoleCommand() {
         cout << "Error : Enter a valid command" << endl;
         consoleCommand();
     }
-
+    consoleCommand();
 }
 
 int DatabaseController::getIdFromConsole() {
@@ -193,15 +193,15 @@ void DatabaseController::addFaculty() {
     string name;
     cin >> name;
 
-    cout << "\nLevel : ";
+    cout << "Level : ";
     string level;
     cin >> level;
 
-    cout << "\nMajor : ";
+    cout << "Major : ";
     string major;
     cin >> major;
 
-    cout << "\nGPA : ";
+    cout << "GPA : ";
     double gpa;
     cin >> gpa;
 
@@ -236,18 +236,15 @@ void DatabaseController::studentChangeAdvisor() {
     facultyBST->erase(f);
 }
 
-void DatabaseController::facultyChangeAdvisor() {
+void DatabaseController::facultyRemoveAdvisee() {
     cout << "Enter the id of the faculty you would like to CHANGE" << endl;
     int facID = getIdFromConsole();
 
     cout << "\nEnter the id of the advisee you would like to REMOVE";
     int studID = getIdFromConsole();
 
-    Faculty f = facultyBST->find(Faculty(facID, "T Name", "T Level", "T Class"));
+    facultyBST->find(Faculty(facID, "T Name", "T Level", "T Class")).removeStudentID(studID);
 
-    Student s = studentBST->find(Student(id, "T Name", "T Level", "T Class", 0.0));
-
-    facultyBST->erase(f);
 }
 
 

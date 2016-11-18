@@ -34,7 +34,7 @@ private:
     void findPrintStudent();
     void findPrintFaculty();
     void studentChangeAdvisor();
-    void facultyChangeAdvisor();
+    void facultyRemoveAdvisee();
 
 };
 
