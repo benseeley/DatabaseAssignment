@@ -164,6 +164,8 @@ void DatabaseController::consoleCommand() {
     else if(command == "7"){
         //Add a new student TODO:CONTACT TEAM MEMBER
         addStudent();
+        studentDataBase->backUp((new BinarySearchTree<Student>(*studentBST)));
+        facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
 
     }
     else if(command == "8"){
