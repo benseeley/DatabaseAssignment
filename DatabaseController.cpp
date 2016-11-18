@@ -39,7 +39,7 @@ void DatabaseController::init() {
     cout << "Running init" << endl;
 
     //Check for file
-    //if(facStream.good()){
+    if(facStream.good()){
         facStream.close();
 
         cout << "************************************\n"
@@ -58,10 +58,10 @@ void DatabaseController::init() {
         }
 
         PS.closeFile();
-    //}
+    }
 
     //Check for File
-    //if(studStream.good()){
+    if(studStream.good()){
         studStream.close();
 
         cout << "************************************\n"
@@ -81,8 +81,7 @@ void DatabaseController::init() {
         }
 
         PS.closeFile();
-    //1
-    //}
+    }
 
 }
 
