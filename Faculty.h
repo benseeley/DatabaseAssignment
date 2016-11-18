@@ -7,8 +7,10 @@
 
 #include <string>
 #include <vector>
+#include "Sequence.h"
 
 using namespace std;
+using namespace cpsc350;
 
 class Faculty {
 public:
@@ -29,6 +31,8 @@ public:
     //Class Methods
     void addStudentID(int id);
     void removeStudentID(int id);
+
+    NodeSequence<int> getAdviseeIDs() const { return *pAdviseesIDS; }
 
     //ToString & JSON Methods
     string toString() const;
@@ -56,7 +60,7 @@ private:
     string mName;
     string mLevel;
     string mDepartment;
-    vector<int>* pAdviseesIDS = new vector<int>;
+    NodeSequence<int>* pAdviseesIDS = new NodeSequence<int>();
 };
 
 

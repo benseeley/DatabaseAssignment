@@ -106,10 +106,9 @@ namespace cpsc350
         trailer_->prev = header_;
         for(DLinkedIterator elem = this->begin(); elem != this->end(); ++elem)
         {
-            this->insertBack(elem);
+            insertBack(elem.operator*());
         }
     }
-
 
 
     template <typename Elem>

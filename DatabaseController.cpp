@@ -371,6 +371,14 @@ void DatabaseController::findPrintFacultyAdvisees()
 
     Faculty faculty = facultyBST->find(Faculty(id, "T Name", "T Level", "T Class"));
 
+    int* studentIDs = faculty.getAdviseeIDs().toArray();
+
+    for(int i = 0; i < faculty.getAdviseeIDs().size(); ++i)
+    {
+        Student stud = studentBST->find(Student(studentIDs[i], "T Name", "T Level", "T Class", 0.0, 0));
+        cout << stud.toString() << endl;
+    }
+
 
 }
 
