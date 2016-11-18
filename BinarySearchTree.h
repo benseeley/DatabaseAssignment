@@ -67,7 +67,7 @@ namespace cpsc350
         ~BinarySearchTree();
 
         void insert(const Elem& elem) throw(std::logic_error);
-        void erase(Elem& elem);
+        void erase(const Elem& elem) throw(std::logic_error);
         Elem& find(const Elem& elem) throw(std::logic_error);
         void clear();
 
@@ -85,7 +85,8 @@ namespace cpsc350
         void clearer(TreeNode* node); //recursive clear tool
         void inOrderPrinter(TreeNode *node) const;
         void preOrderReturner(TreeNode *node, NodeSequence<Elem>* seq) const;
-        void erase(const Elem& elem) throw(std::logic_error);
+        void eraser(TreeNode *node) throw(std::logic_error);
+        TreeNode* minNode(TreeNode* node);
 
     };
 
@@ -163,11 +164,7 @@ namespace cpsc350
         }
     }
 
-    template <typename Elem>
-    void BinarySearchTree<Elem>::erase(Elem& elem)
-    {
 
-    }
 
     template <typename Elem>
     Elem &BinarySearchTree<Elem>::find(const Elem& elem) throw(std::logic_error)
@@ -248,7 +245,7 @@ namespace cpsc350
         else
         {
             inOrderPrinter(node->left_);
-            cout << node << endl;
+            cout << node->elem_ << endl;
             inOrderPrinter(node->right_);
         }
     }
@@ -275,11 +272,16 @@ namespace cpsc350
         }
     }
 
+
     template <typename Elem>
-    void BinarySearchTree<Elem>::erase(const Elem &elem) throw(std::logic_error)
+    typename BinarySearchTree<Elem>::TreeNode *BinarySearchTree<Elem>::minNode(BinarySearchTree<Elem>::TreeNode *node)
     {
-        TreeNode* nodeToDelete = finder(root_, elem);
+        TreeNode* current = node;
 
-
+        while (current->left_ != NULL)
+        {
+            current = current->left_;
+        }
+        return current;
     }
 }
