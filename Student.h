@@ -32,6 +32,8 @@ public:
     void changeAdvisor(int advisorID);
     void updateAdvisor();
 
+    int getAdvisorID() { return mAdvisorID; }
+
     //Overloaded Operators
     friend bool operator==(const Student A, const Student& B);
     friend bool operator<(const Student A, const Student& B);

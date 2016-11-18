@@ -9,7 +9,7 @@
 #include "Sequence.h"
 #include "stdexcept"
 
-#endif //DATABASEASSIGNMENT_BINARYTREE_H
+
 
 
 
@@ -104,7 +104,7 @@ namespace cpsc350
         NodeSequence<Elem>* nodeSequence = tree.toSequence();
         for(int i = 0; i < nodeSequence->size(); ++i)
         {
-            this->insert(nodeSequence[i]);
+            this->insert((nodeSequence)->operator[](i).operator*());
         }
         delete nodeSequence;
     }
@@ -254,6 +254,8 @@ namespace cpsc350
     NodeSequence<Elem> *BinarySearchTree<Elem>::toSequence() const
     {
         NodeSequence<Elem>* temp = new NodeSequence<Elem>();
+        preOrderReturner(root_, temp);
+        return temp;
 
     }
 
@@ -266,9 +268,9 @@ namespace cpsc350
         }
         else
         {
-            inOrderPrinter(node->left_);
             seq->insertBack(node->elem_);
-            inOrderPrinter(node->right_);
+            preOrderReturner(node->left_, seq);
+            preOrderReturner(node->right_, seq);
         }
     }
 
@@ -340,3 +342,7 @@ namespace cpsc350
         return node;
     }
 }
+
+
+
+#endif //DATABASEASSIGNMENT_BINARYTREE_H

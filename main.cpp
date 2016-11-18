@@ -75,7 +75,7 @@ for(int i = 0; i < fVec->size(); i++){
 /**
 std::cout << "Hello, World!" << std::endl;
 DLinkedList<int> *list2 = new DLinkedList<int>();
-
+/
 NodeSequence<int> *seq = new NodeSequence<int>();
 
 seq->insertFront(3);
@@ -89,7 +89,7 @@ for(int i = 0; i < seq->size(); ++i)
     cout << *(*seq)[i] << endl;
 
 }
-
+/
 cout << "==============" << endl;
 
 seq->eraseBack();

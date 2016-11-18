@@ -18,7 +18,7 @@ public:
     DataBase(int historySize = 5);
     ~DataBase();
     BinarySearchTree<Elem>* getRollback();
-    void backUp(BinarySearchTree* tree);
+    void backUp(BinarySearchTree<Elem>* tree);
     bool empty() { return treeHistory->empty();}
 
 private:
@@ -46,12 +46,12 @@ BinarySearchTree<Elem> *DataBase<Elem>::getRollback()
 }
 
 template <typename Elem>
-void DataBase<Elem>::backUp(BinarySearchTree* tree)
+void DataBase<Elem>::backUp(BinarySearchTree<Elem>* tree)
 {
-    BinarySearchTree<Elem>* newTree = new BinarySearchTree(*tree);
+    BinarySearchTree<Elem>* newTree = new BinarySearchTree<Elem>(*tree);
     if(treeHistory->full())
     {
-        BinarySearchTree* temp = treeHistory->back();
+        BinarySearchTree<Elem>* temp = treeHistory->back();
         treeHistory->push(tree);
         delete temp;
         return;

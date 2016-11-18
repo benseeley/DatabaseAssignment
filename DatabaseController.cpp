@@ -2,19 +2,27 @@
 // Created by creator on 11/15/16.
 //
 
+#ifndef DATABASEASSIGNMENT_DATABASECONTROLLER_CPP
+#define DATABASEASSIGNMENT_DATABASECONTROLLER_CPP
 #include "DatabaseController.h"
 #include "PeopleSerializable.h"
 #include "BinarySearchTree.h"
 #include "Sequence.h"
+#include "DataBase.h"
+
 
 using namespace std;
 
 cpsc350::BinarySearchTree<Student>* studentBST = new cpsc350::BinarySearchTree<Student>;
 cpsc350::BinarySearchTree<Faculty>* facultyBST = new cpsc350::BinarySearchTree<Faculty>;
 
+DataBase<Student>* studentDataBase = new DataBase<Student>(5);
+DataBase<Faculty>* facultyDataBase = new DataBase<Faculty>(5);
 
 DatabaseController::DatabaseController() {}
 DatabaseController::~DatabaseController() {}
+
+
 
 void DatabaseController::run() {
     init();
@@ -128,12 +136,13 @@ void DatabaseController::consoleCommand() {
     }
     else if(command == "5"){
         //Given a student’s id, print the name and info of their faculty advisor TODO:@copp
+        findPrintStudentAdvisor();
 
 
     }
     else if(command == "6"){
         //Given a faculty id, print ALL the names and info of his/her advisees. TODO:@copp
-
+        findPrintFacultyAdvisees();
 
     }
     else if(command == "7"){
@@ -144,31 +153,40 @@ void DatabaseController::consoleCommand() {
     else if(command == "8"){
         //Delete a student given the id, TODO:CONTACT TEAM MEMBER
         addFaculty();
+        studentDataBase->backUp((new BinarySearchTree<Student>(*studentBST)));
+        facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
     }
     else if(command == "9"){
         //Add a new faculty member TODO:CONTACT TEAM MEMBER
         deleteStudent();
+        studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
+        facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
 
     }
     else if(command == "10"){
         //Delete a faculty member given the id. TODO:CONTACT TEAM MEMBER
         deleteFaculty();
+        studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
+        facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
 
     }
     else if(command == "11"){
         //Change a student’s advisor given the student id and the new faculty id. @TODO:copp
         studentChangeAdvisor();
+        studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
+        facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
 
     }
     else if(command == "12"){
         //Remove an advisee from a faculty member given the ids TODO:@copp
         facultyRemoveAdvisee();
-
+        studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
+        facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
     }
     else if(command == "13"){
         //Rollback TODO:@ben
-
-
+        facultyBST = facultyDataBase->getRollback();
+        studentBST = studentDataBase->getRollback();
     }
     else if(command == "14"){
         //Exit
@@ -316,3 +334,35 @@ void DatabaseController::facultyRemoveAdvisee() {
 
     studentBST->find(Student(studID, "T Name", "T Level", "T Class", 0.0)).changeAdvisor(0);
 }
+
+void DatabaseController::findPrintStudentAdvisor()
+{
+    cout << "Enter the id of the student you would like to display the advisor of" << endl;
+    int id = getIdFromConsole();
+    Student student = studentBST->find(Student(id, "T Name", "T Level", "T Class", 0.0, 0));
+
+    int advisorID = student.getAdvisorID();
+
+    string toS = facultyBST->find(Faculty(advisorID, "T Name", "T Level", "T Class")).toString();
+    cout << toS << endl;
+}
+
+void DatabaseController::findPrintFacultyAdvisees()
+{
+    cout << "Enter the id of the faculty you would like to display the advisees of" << endl;
+    int id = getIdFromConsole();
+
+    Faculty faculty = facultyBST->find(Faculty(id, "T Name", "T Level", "T Class"));
+
+
+}
+
+
+#endif
+
+
+
+
+
+
+
