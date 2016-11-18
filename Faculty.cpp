@@ -4,6 +4,8 @@
 
 #include "Faculty.h"
 #include "json.hpp"
+#include "Student.h"
+#include "stdexcept"
 
 int Faculty::Total_IDS = 0;
 
@@ -77,6 +79,15 @@ string Faculty::getJson() const {
 
 void Faculty::removeStudentID(int id) {
 
+    int count = 0;
+    for(std::vector<int>::iterator it = pAdviseesIDS->begin(); it != pAdviseesIDS->end(); ++it)
+    {
+        if(id == pAdviseesIDS->at(count)){
+            pAdviseesIDS->erase(it);
+            return;
+        }
+        count++;
+    }
 }
 
 
