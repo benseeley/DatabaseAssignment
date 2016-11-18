@@ -20,10 +20,9 @@ class Student;
 class PeopleSerializable {
 private:
     std::string dataFile;
-    //std::string facultyDataFile;
 
-    const string STUDENT_FILE = "masterStudent.txt";
-    const string FACULTY_FILE = "masterFaculty.txt";
+    const string STUDENT_FILE = "studentTable.txt";
+    const string FACULTY_FILE = "facultyTable.txt";
 
     bool streamFlag = false;
     std::ifstream* readStream;
