@@ -58,6 +58,8 @@ namespace cpsc350
         bool empty() const;
         DLinkedIterator begin() const;
         DLinkedIterator end() const;
+        Elem& front() const { return trailer_->prev->elem; }
+        Elem& back() const { return header_->next->elem; }
         void insertFront(const Elem& elem);
         void insertBack(const Elem& elem);
         void insert(const DLinkedIterator& pos, const Elem& elem); //inserts e before p

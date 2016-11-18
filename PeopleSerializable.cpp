@@ -109,7 +109,7 @@ Faculty PeopleSerializable::deserializeFaculty(std::string jString) {
         *adviseeArr = j.at("adviseesIDS").back();
     }
     else {
-        vector<int> v = j.at("adviseesIDS");;
+        vector<int> v = j.at("adviseesIDS");
         for(int i = 0; i < numOfAdvisees; i++){
             *(adviseeArr + i) = v.at(i);
         }
