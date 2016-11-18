@@ -28,6 +28,7 @@ public:
 
     //Class Methods
     void addStudentID(int id);
+    void removeStudentID(int id);
 
     //ToString & JSON Methods
     string toString() const;

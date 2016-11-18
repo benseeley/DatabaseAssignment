@@ -58,6 +58,8 @@ void Faculty::addStudentID(int id){
 
 }
 
+
+
 string Faculty::getJson() const {
     nlohmann::json j;
 
@@ -72,6 +74,11 @@ string Faculty::getJson() const {
 
     return j.dump();
 }
+
+void Faculty::removeStudentID(int id) {
+
+}
+
 
 
 
