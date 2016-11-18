@@ -23,6 +23,7 @@ namespace cpsc350
     public:
         NodeSequence();
         ~NodeSequence();
+        Elem* toArray();
 
         typename DLinkedList<Elem>::DLinkedIterator atIndex(int idx) const; //returns iterator at given index
         int indexOf(const typename DLinkedList<Elem>::DLinkedIterator& p) const; //returns -1 if element not found
@@ -85,6 +86,18 @@ namespace cpsc350
             }
         }
         return idx;
+    }
+
+    template <typename Elem>
+    Elem *NodeSequence<Elem>::toArray()
+    {
+        Elem* temp = new Elem[this->size()];
+        for(int i = 0; i < this->size(); ++i)
+        {
+            temp[i] = this->atIndex(i).operator*();
+        }
+        return temp;
+
     }
 
 }

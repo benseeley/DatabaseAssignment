@@ -4,8 +4,11 @@
 
 #include "Faculty.h"
 #include "json.hpp"
+#include "Sequence.h"
 #include "Student.h"
 #include "stdexcept"
+
+using cpsc350::NodeSequence;
 
 int Faculty::Total_IDS = 0;
 
@@ -27,9 +30,9 @@ Faculty::Faculty(int id, string name, string level, string department, int* advi
     //Adds advisees
     if(adviseeArr != 0){
 
-        pAdviseesIDS = new vector<int>;
+        pAdviseesIDS = new NodeSequence<int>();
         for (int i = 0; i < adviseeArrLength; ++i) {
-            pAdviseesIDS->push_back(*(adviseeArr + i));
+            pAdviseesIDS->insertBack(*(adviseeArr + i));
         }
     }
 }
@@ -46,7 +49,7 @@ string Faculty::toString() const {
 
     //Populates toString with adviseesID's
     for(int i = 0; i < pAdviseesIDS->size(); i++){
-        toS += to_string(pAdviseesIDS->at(i));
+        toS += to_string(pAdviseesIDS->atIndex(i).operator*());
         toS += ", ";
     }
 
@@ -56,7 +59,7 @@ string Faculty::toString() const {
 void Faculty::addStudentID(int id){
     //int lastIndex = pAdviseesIDS->size() -1);
 
-    pAdviseesIDS->push_back(id);
+    pAdviseesIDS->insertBack(id);
 
 }
 
@@ -64,13 +67,16 @@ void Faculty::addStudentID(int id){
 
 string Faculty::getJson() const {
     nlohmann::json j;
+    vector<int>* tempVec = new vector<int>();
+    int* tempArr = pAdviseesIDS->toArray();
+    tempVec->assign(tempArr, tempArr + pAdviseesIDS->size());
 
     j["id"] = mID;
     j["name"] = mName;
     j["level"] = mLevel;
     j["department"] = mDepartment;
     j["numOfAdvisees"] = pAdviseesIDS->size();
-    j["adviseesIDS"] = *pAdviseesIDS;
+    j["adviseesIDS"] = tempVec;
 
 
 
@@ -80,9 +86,9 @@ string Faculty::getJson() const {
 void Faculty::removeStudentID(int id) {
 
     int count = 0;
-    for(std::vector<int>::iterator it = pAdviseesIDS->begin(); it != pAdviseesIDS->end(); ++it)
+    for(NodeSequence<int>::DLinkedIterator it = pAdviseesIDS->begin(); it != pAdviseesIDS->end(); ++it)
     {
-        if(id == pAdviseesIDS->at(count)){
+        if(id == it.operator*()){
             pAdviseesIDS->erase(it);
             return;
         }
