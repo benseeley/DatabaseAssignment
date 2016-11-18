@@ -31,6 +31,8 @@ void DatabaseController::run() {
 
 
 void DatabaseController::init() {
+    bool noFileFlag = true;
+
     ifstream facStream("facultyTable.txt");
     ifstream studStream("studentTable.txt");
 
@@ -41,6 +43,7 @@ void DatabaseController::init() {
     //Check for file
     if(facStream.good()){
         facStream.close();
+        noFileFlag = false;
 
         cout << "************************************\n"
              << "***Deserializing Faculty into BST***\n"
@@ -49,12 +52,19 @@ void DatabaseController::init() {
 
         PS.setFile(PeopleSerializable::facultyFile);
 
+        //The library i use to parse serialized data returns a vector array.
+        //This is why built in dataStruct is being used
         //Deserialize Faculty Data
         vector<Faculty>* f = PS.deserializeFacultyFromStream();
 
         //Populate Tree
         for(int i = 0; i < f->size(); i++){
-            facultyBST->insert(f->at(i));
+            Faculty& objF = f->at(i);
+            facultyBST->insert(objF);
+
+            if(objF.mID > Faculty::Total_IDS){
+                Faculty::Total_IDS = objF.mID;
+            }
         }
 
         PS.closeFile();
@@ -63,6 +73,7 @@ void DatabaseController::init() {
     //Check for File
     if(studStream.good()){
         studStream.close();
+        noFileFlag = false;
 
         cout << "************************************\n"
              << "***Deserializing Student into BST***\n"
@@ -72,15 +83,26 @@ void DatabaseController::init() {
         PS.setFile(PeopleSerializable::sudentFile);
 
 
+        //The library i use to parse serialized data returns a vector array.
+        //This is why built in dataStruct is being used
         //Deserilize Student Data
         vector<Student>* s = PS.deserializeStudentsFromStream();
 
         //Populate Tree
         for(int i = 0; i < s->size(); i++){
-            studentBST->insert(s->at(i));
+            Student& objS = s->at(i);
+            studentBST->insert(objS);
+
+            if(objS.mID > Student::Total_IDS){
+                Student::Total_IDS = objS.mID;
+            }
         }
 
         PS.closeFile();
+    }
+
+    if(noFileFlag == true){
+        cout << "*No File Found : Blank project created*" << endl;
     }
 
 }
@@ -88,10 +110,12 @@ void DatabaseController::init() {
 void DatabaseController::serializeBST() {
 
     PeopleSerializable PS;
+    bool noFileFlag = true;
 
     if(studentBST->size() > 0){
+        noFileFlag = false;
 
-        cout << "Serializing Student BST to \"studentTable.txt\"" << endl;
+        cout << "*Serializing Student BST to *" << endl;
 
         PS.setFile(PeopleSerializable::sudentFile);
 
@@ -99,16 +123,18 @@ void DatabaseController::serializeBST() {
 
         for(int i = 0; i < NSPtr->size(); i++){
             Student& s = *(NSPtr->atIndex(i));
-            string toS = s.toString();
+            string toS = s.getJson();
             PS.serializePerson(toS);
+
         }
 
         PS.closeFile();
     }
 
     if(facultyBST->size() > 0){
+        noFileFlag = false;
 
-        cout << "Serializing Faculty BST to \"facultyTable.txt\"" << endl;
+        cout << "*Serializing Faculty BST to *" << endl;
 
         PS.setFile(PeopleSerializable::facultyFile);
 
@@ -116,11 +142,15 @@ void DatabaseController::serializeBST() {
 
         for(int i = 0; i < NSPtr->size(); i++){
             Faculty& s = *(NSPtr->atIndex(i));
-            string toS = s.toString();
+            string toS = s.getJson();
             PS.serializePerson(toS);
         }
 
         PS.closeFile();
+    }
+
+    if(noFileFlag == true){
+        cout << "*No BST Data Found : Exited without serialization*" << endl;
     }
 
     //TODO: Populate BST with people arrays @
@@ -169,40 +199,40 @@ void DatabaseController::consoleCommand() {
     else if(command == "8"){
         //Delete a student given the id, TODO:CONTACT TEAM MEMBER
         addFaculty();
-        studentDataBase->backUp((new BinarySearchTree<Student>(*studentBST)));
-        facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
+        //studentDataBase->backUp((new BinarySearchTree<Student>(*studentBST)));
+        //facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
     }
     else if(command == "9"){
         //Add a new faculty member TODO:CONTACT TEAM MEMBER
         deleteStudent();
-        studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
-        facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
+        //studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
+        //facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
 
     }
     else if(command == "10"){
         //Delete a faculty member given the id. TODO:CONTACT TEAM MEMBER
         deleteFaculty();
-        studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
-        facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
+        //studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
+        //facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
 
     }
     else if(command == "11"){
         //Change a student’s advisor given the student id and the new faculty id. @TODO:copp
         studentChangeAdvisor();
-        studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
-        facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
+        //studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
+        //facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
 
     }
     else if(command == "12"){
         //Remove an advisee from a faculty member given the ids TODO:@copp
         facultyRemoveAdvisee();
-        studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
-        facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
+        //studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
+        //facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
     }
     else if(command == "13"){
         //Rollback TODO:@ben
-        facultyBST = facultyDataBase->getRollback();
-        studentBST = studentDataBase->getRollback();
+        //facultyBST = facultyDataBase->getRollback();
+        //studentBST = studentDataBase->getRollback();
     }
     else if(command == "14"){
         //Exit
@@ -270,7 +300,8 @@ void DatabaseController::findPrintFaculty() {
 }
 
 void DatabaseController::addStudent() {
-    cout << "Creating Student" << endl;
+    cout << "*Create Student*" << endl;
+    cout << "Please use underscore _ to link words with spaces" << endl;
     cout << "Name : ";
     string name;
     cin >> name;
@@ -284,14 +315,26 @@ void DatabaseController::addStudent() {
     cin >> major;
 
     cout << "\nGPA : ";
+    string option = "";
+
+    cin >> option;
     double gpa;
-    cin >> gpa;
+
+    try{
+        gpa = stod(option);
+    }
+    catch(exception err){
+        cout << err.what() << endl;
+        throw invalid_argument("Error, invalid integer, exiting program");
+    }
 
     studentBST->insert(Student(name, level, major, gpa));
 }
 
 void DatabaseController::addFaculty() {
     cout << "Creating Faculty" << endl;
+    cout << "Please use underscore _ to link words with spaces" << endl;
+
     cout << "Name : ";
     string name;
     cin >> name;
@@ -330,13 +373,24 @@ void DatabaseController::studentChangeAdvisor() {
     int studID = getIdFromConsole();
 
     cout << "Enter this students new advisor id" << endl;
-    int advisorID = getIdFromConsole();
+    int newAdvisorID = getIdFromConsole();
 
+    //Search with dummy objects
+    Student& s = studentBST->find(Student(studID, "T Name", "T Level", "T Class", 0.0));
+    Faculty& f = facultyBST->find(Faculty(newAdvisorID, "T Name", "T Level", "T Class"));
+
+
+    //Find/Remove old ID
+    int oldFacultyID = s.getAdvisorID();
     //Checks to see if faculty exists
-    facultyBST->find(Faculty(advisorID, "T Name", "T Level", "T Class")).addStudentID(studID);
+    if(oldFacultyID != 0){
+        Faculty& fOld = facultyBST->find(Faculty(oldFacultyID, "T Name", "T Level", "T Class"));
+        fOld.removeStudentID(studID);
+    }
 
-    //Find dummy obj with ID
-    studentBST->find(Student(studID, "T Name", "T Level", "T Class", 0.0)).changeAdvisor(advisorID);
+    //Change ids
+    s.changeAdvisor(newAdvisorID);
+    f.addStudentID(studID);
 }
 
 void DatabaseController::facultyRemoveAdvisee() {

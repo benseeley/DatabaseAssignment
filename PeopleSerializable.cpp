@@ -5,7 +5,6 @@
 #include "PeopleSerializable.h"
 
 
-
 using namespace std;
 
 PeopleSerializable::PeopleSerializable() {

@@ -12,6 +12,16 @@ using namespace std;
 
 int main()
 {
+
+    DatabaseController* dbCont;
+
+    dbCont->run();
+}
+
+
+//For Example Only
+
+
 /*    RingBuffer<int>* rb = new RingBuffer<int>(3);
     rb->push(5);
     rb->push(4);
@@ -22,12 +32,7 @@ int main()
     cout << *stud << endl;
     delete stud;
     delete rb;*/
-    //There should only be one DB controller
-    DatabaseController* dbCont;
-
-    dbCont->run();
-}
-
+//There should only be one DB controller
 
 
 

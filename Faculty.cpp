@@ -45,7 +45,7 @@ Faculty::~Faculty() {
 }
 
 string Faculty::toString() const {
-    string toS = "Type : Faculty, ID : " + to_string(mID) + ",\nLevel : " + mLevel + ",\nDepartement : " + mDepartment + ",\nAdviseesIDS : ";
+    string toS = "Type : Faculty, ID : " + to_string(mID) + "\nName : " + mName + ",\nLevel : " + mLevel + ",\nDepartement : " + mDepartment + ",\nAdviseesIDS : ";
 
     //Populates toString with adviseesID's
     for(int i = 0; i < pAdviseesIDS->size(); i++){
