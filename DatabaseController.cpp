@@ -48,12 +48,10 @@ void DatabaseController::consoleCommand() {
     else if(command == "3"){
         //Find and display student information given the students id TODO:@copp
         findPrintStudent();
-
     }
     else if(command == "4"){
         //Find and display faculty information given the faculty id TODO:@copp
         findPrintFaculty();
-
     }
     else if(command == "5"){
         //Given a student’s id, print the name and info of their faculty advisor TODO:@copp
@@ -72,12 +70,11 @@ void DatabaseController::consoleCommand() {
     }
     else if(command == "8"){
         //Delete a student given the id, TODO:CONTACT TEAM MEMBER
-        deleteStudent();
-
+        addFaculty();
     }
     else if(command == "9"){
         //Add a new faculty member TODO:CONTACT TEAM MEMBER
-        addFaculty();
+        deleteStudent();
 
     }
     else if(command == "10"){
@@ -130,7 +127,7 @@ int DatabaseController::getIdFromConsole() {
 
 
 void DatabaseController::printAllCommands() {
-    cout << "*** Hello User : Enter the numerical value for the command you would like to use***" << endl;
+    cout << "\n\n*** Hello User : Enter the numerical value for the command you would like to use***" << endl;
 
     cout << "1 - Print all students\n"
          << "2 - Print all faculty\n"
@@ -152,18 +149,16 @@ void DatabaseController::findPrintStudent() {
     cout << "Enter the id of the student you would like to display" << endl;
     int id = getIdFromConsole();
 
-    Student s = studentBST->find(Student(id, "T Name", "T Level", "T Class", 0.0, 0));
-
-    s.toString();
+    string toS = studentBST->find(Student(id, "T Name", "T Level", "T Class", 0.0, 0)).toString();
+    cout << toS << endl;
 }
 
 void DatabaseController::findPrintFaculty() {
     cout << "Enter the id of the faculty you would like to display" << endl;
     int id = getIdFromConsole();
 
-    Faculty f = facultyBST->find(Faculty(id, "T Name", "T Level", "T Class"));
-
-    f.toString();
+    string toS = facultyBST->find(Faculty(id, "T Name", "T Level", "T Class")).toString();
+    cout << toS << endl;
 }
 
 void DatabaseController::addStudent() {
@@ -188,7 +183,7 @@ void DatabaseController::addStudent() {
 }
 
 void DatabaseController::addFaculty() {
-    cout << "Creating Student" << endl;
+    cout << "Creating Faculty" << endl;
     cout << "Name : ";
     string name;
     cin >> name;
@@ -197,22 +192,18 @@ void DatabaseController::addFaculty() {
     string level;
     cin >> level;
 
-    cout << "Major : ";
-    string major;
-    cin >> major;
+    cout << "Department : ";
+    string department;
+    cin >> department;
 
-    cout << "GPA : ";
-    double gpa;
-    cin >> gpa;
-
-    studentBST->insert(Student(name, level, major, gpa));
+    facultyBST->insert(Faculty(name, level, department));
 }
 
 void DatabaseController::deleteStudent() {
     cout << "Enter the id of the student you would like to DELETE" << endl;
     int id = getIdFromConsole();
 
-    Student s = studentBST->find(Student(id, "T Name", "T Level", "T Class", 0.0));
+    Student& s = studentBST->find(Student(id, "T Name", "T Level", "T Class", 0.0));
 
     studentBST->erase(s);
 }
@@ -221,19 +212,23 @@ void DatabaseController::deleteFaculty() {
     cout << "Enter the id of the faculty you would like to DELETE" << endl;
     int id = getIdFromConsole();
 
-    Faculty f = facultyBST->find(Faculty(id, "T Name", "T Level", "T Class"));
+    Faculty& f = facultyBST->find(Faculty(id, "T Name", "T Level", "T Class"));
 
     facultyBST->erase(f);
 }
 
 void DatabaseController::studentChangeAdvisor() {
-    cout << "Enter the id of the student you would like to CHANGE" << endl;
+    cout << "Enter the id of the students you would like to CHANGE" << endl;
+    int studID = getIdFromConsole();
 
-    int id = getIdFromConsole();
+    cout << "Enter this students new advisor id" << endl;
+    int advisorID = getIdFromConsole();
 
-    Faculty f = facultyBST->find(Faculty(id, "T Name", "T Level", "T Class"));
+    //Checks to see if faculty exists
+    facultyBST->find(Faculty(advisorID, "T Name", "T Level", "T Class")).addStudentID(studID);
 
-    facultyBST->erase(f);
+    //Find dummy obj with ID
+    studentBST->find(Student(studID, "T Name", "T Level", "T Class", 0.0)).changeAdvisor(advisorID);
 }
 
 void DatabaseController::facultyRemoveAdvisee() {
@@ -243,8 +238,10 @@ void DatabaseController::facultyRemoveAdvisee() {
     cout << "\nEnter the id of the advisee you would like to REMOVE";
     int studID = getIdFromConsole();
 
+    //Removes student with id
     facultyBST->find(Faculty(facID, "T Name", "T Level", "T Class")).removeStudentID(studID);
 
+    studentBST->find(Student(studID, "T Name", "T Level", "T Class", 0.0)).changeAdvisor(0);
 }
 
 

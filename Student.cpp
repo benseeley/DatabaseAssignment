@@ -18,7 +18,7 @@ Student::~Student() {
 
 //On Creation constructor
 Student::Student(string name, string level, string major, double gpa) : mID(++Total_IDS), mName(name), mLevel(level), mMajor(major), mGPA(gpa){
-
+    mAdvisorID = 0;
 }
 
 Student::Student(int id, string name, string level, string major, double gpa) : mID(id), mName(name), mLevel(level), mMajor(major), mGPA(gpa){
@@ -43,7 +43,7 @@ void Student::updateAdvisor() {
 
 
 const string Student::toString() const {
-    string toS = "Type : Student, ID : " + to_string(mID) + "\nName : " + mName + ",\nLevel : " + mLevel + ",\nMajor : " + mMajor + ",\nGPA : " + to_string(mGPA) + ",\nAdvisor : " + to_string(mAdvisorID);
+    string toS = "Type : Student, ID : " + to_string(mID) + "\nName : " + mName + ",\nLevel : " + mLevel + ",\nMajor : " + mMajor + ",\nGPA : " + to_string(mGPA) + ",\nAdvisorID : " + to_string(mAdvisorID);
     return toS;
 }
 
