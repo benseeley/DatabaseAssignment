@@ -72,12 +72,11 @@ void DatabaseController::consoleCommand() {
     }
     else if(command == "8"){
         //Delete a student given the id, TODO:CONTACT TEAM MEMBER
-        deleteStudent();
-
+        addFaculty();
     }
     else if(command == "9"){
         //Add a new faculty member TODO:CONTACT TEAM MEMBER
-        addFaculty();
+        deleteFaculty();
 
     }
     else if(command == "10"){
@@ -130,7 +129,7 @@ int DatabaseController::getIdFromConsole() {
 
 
 void DatabaseController::printAllCommands() {
-    cout << "*** Hello User : Enter the numerical value for the command you would like to use***" << endl;
+    cout << "\n\n*** Hello User : Enter the numerical value for the command you would like to use***" << endl;
 
     cout << "1 - Print all students\n"
          << "2 - Print all faculty\n"
@@ -227,13 +226,17 @@ void DatabaseController::deleteFaculty() {
 }
 
 void DatabaseController::studentChangeAdvisor() {
-    cout << "Enter the id of the student you would like to CHANGE" << endl;
+    cout << "Enter the id of the students you would like to CHANGE" << endl;
+    int studID = getIdFromConsole();
+    cin >> studID;
 
-    int id = getIdFromConsole();
+    cout << "Enter this students new advisor id" << endl;
+    int advisorID;
+    cin >> advisorID;
 
-    Faculty f = facultyBST->find(Faculty(id, "T Name", "T Level", "T Class"));
+    facultyBST->find(Faculty(advisorID, "T Name", "T Level", "T Class"));
 
-    facultyBST->erase(f);
+    studentBST->find(Student(studID, "T Name", "T Level", "T Class", 0.0)).changeAdvisor(advisorID);
 }
 
 void DatabaseController::facultyRemoveAdvisee() {
