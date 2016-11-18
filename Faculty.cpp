@@ -15,6 +15,10 @@ Faculty::Faculty(string name, string level, string department) : mID(++Total_IDS
 
 }
 
+//For Dummy Obj
+Faculty::Faculty(int id, string name, string level, string department) : mID(id), mName(name), mLevel(level), mDepartment(department){
+
+}
 
 Faculty::Faculty(int id, string name, string level, string department, int* adviseeArr, int adviseeArrLength) : mID(id), mName(name), mLevel(level), mDepartment(department) {
 
@@ -27,6 +31,8 @@ Faculty::Faculty(int id, string name, string level, string department, int* advi
         }
     }
 }
+
+
 
 
 Faculty::~Faculty() {
@@ -66,4 +72,6 @@ string Faculty::getJson() const {
 
     return j.dump();
 }
+
+
 

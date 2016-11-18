@@ -19,6 +19,8 @@ public:
     //Called when constructing for FIRST time, sets id using static var
     Faculty(string name, string level, string department);
 
+    Faculty(int id, string name, string level, string department);
+
     //Called when constructed from existing data, sets id from data
     Faculty(int id, string name, string level, string department,  int* adviseeArr, int adviseeArrLength);
 
@@ -30,6 +32,18 @@ public:
     //ToString & JSON Methods
     string toString() const;
     string getJson() const;
+
+    friend bool operator==(const Faculty A, const Faculty& B){
+        return (A.mID == B.mID);
+    };
+
+    friend bool operator<(const Faculty A, const Faculty& B){
+        return (A.mID < B.mID);
+    };
+
+    friend bool operator>(const Faculty A, const Faculty& B){
+        return (A.mID > B.mID);
+    };
 
     friend std::ostream& operator<<(std::ostream& os, const Faculty& obj)
     {

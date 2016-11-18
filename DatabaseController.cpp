@@ -4,17 +4,21 @@
 
 #include "DatabaseController.h"
 #include "PeopleSerializable.h"
+#include "BinarySearchTree.h"
 
 using namespace std;
 
+cpsc350::BinarySearchTree<Student>* studentBST = new cpsc350::BinarySearchTree<Student>;
+cpsc350::BinarySearchTree<Faculty>* facultyBST = new cpsc350::BinarySearchTree<Faculty>;
+
+
+DatabaseController::DatabaseController() {}
+DatabaseController::~DatabaseController() {}
 
 void DatabaseController::run() {
     init();
-
-
+    consoleCommand();
 }
-
-
 
 
 void DatabaseController::init() {
@@ -22,7 +26,7 @@ void DatabaseController::init() {
     PeopleSerializable streamController;
 
 
-    //TODO: Populate BST with people arrays @BEN
+    //TODO: Populate BST with people arrays @
 
 }
 
@@ -43,12 +47,12 @@ void DatabaseController::consoleCommand() {
     }
     else if(command == "3"){
         //Find and display student information given the students id TODO:@copp
-        findStudent();
+        findPrintStudent();
 
     }
     else if(command == "4"){
         //Find and display faculty information given the faculty id TODO:@copp
-        findFaculty();
+        findPrintFaculty();
 
     }
     else if(command == "5"){
@@ -63,32 +67,32 @@ void DatabaseController::consoleCommand() {
     }
     else if(command == "7"){
         //Add a new student TODO:CONTACT TEAM MEMBER
-
+        addStudent();
 
     }
     else if(command == "8"){
         //Delete a student given the id, TODO:CONTACT TEAM MEMBER
-
+        deleteStudent();
 
     }
     else if(command == "9"){
         //Add a new faculty member TODO:CONTACT TEAM MEMBER
-
+        addFaculty();
 
     }
     else if(command == "10"){
         //Delete a faculty member given the id. TODO:CONTACT TEAM MEMBER
-
+        deleteFaculty();
 
     }
     else if(command == "11"){
         //Change a student’s advisor given the student id and the new faculty id. @TODO:copp
-
+        //studentChangeAdvisor();
 
     }
     else if(command == "12"){
         //Remove an advisee from a faculty member given the ids TODO:@copp
-
+        //facultyRemoveAdvisee();
 
     }
     else if(command == "13"){
@@ -107,9 +111,7 @@ void DatabaseController::consoleCommand() {
 
 }
 
-//"consoleCommand" methods
-void DatabaseController::findStudent() {
-    cout << "Enter the id of the student you would like to display" << endl;
+int DatabaseController::getIdFromConsole() {
     string option = "";
 
     cin >> option;
@@ -120,32 +122,11 @@ void DatabaseController::findStudent() {
     }
     catch(exception err){
         cout << err.what() << endl;
-        return;
+        throw invalid_argument("Error, invalid integer, exiting program");
     }
 
-    //TODO: Search BST for Student
-
+    return id;
 }
-
-void DatabaseController::findFaculty() {
-    cout << "Enter the id of the faculty you would like to display" << endl;
-    string option = "";
-
-    cin >> option;
-    int ID;
-
-    try{
-        ID = stoi(option);
-    }
-    catch(exception err){
-        cout << err.what() << endl;
-        return;
-    }
-
-    //TODO: Search BST for Student
-}
-
-
 
 
 void DatabaseController::printAllCommands() {
@@ -166,6 +147,86 @@ void DatabaseController::printAllCommands() {
          << "13 - UNDO\n"
          << "14 - Exit\n";
 }
+
+void DatabaseController::findPrintStudent() {
+    cout << "Enter the id of the student you would like to display" << endl;
+    int id = getIdFromConsole();
+
+    Student s = studentBST->find(Student(id, "T Name", "T Level", "T Class", 0.0, 0));
+
+    s.toString();
+}
+
+void DatabaseController::findPrintFaculty() {
+    cout << "Enter the id of the faculty you would like to display" << endl;
+    int id = getIdFromConsole();
+
+    Faculty f = facultyBST->find(Faculty(id, "T Name", "T Level", "T Class"));
+
+    f.toString();
+}
+
+void DatabaseController::addStudent() {
+    cout << "Creating Student" << endl;
+    cout << "Name : ";
+    string name;
+    cin >> name;
+
+    cout << "\nLevel : ";
+    string level;
+    cin >> level;
+
+    cout << "\nMajor : ";
+    string major;
+    cin >> major;
+
+    cout << "\nGPA : ";
+    double gpa;
+    cin >> gpa;
+
+    studentBST->insert(Student(name, level, major, gpa));
+}
+
+void DatabaseController::addFaculty() {
+    cout << "Creating Student" << endl;
+    cout << "Name : ";
+    string name;
+    cin >> name;
+
+    cout << "\nLevel : ";
+    string level;
+    cin >> level;
+
+    cout << "\nMajor : ";
+    string major;
+    cin >> major;
+
+    cout << "\nGPA : ";
+    double gpa;
+    cin >> gpa;
+
+    studentBST->insert(Student(name, level, major, gpa));
+}
+
+void DatabaseController::deleteStudent() {
+    cout << "Enter the id of the student you would like to DELETE" << endl;
+    int id = getIdFromConsole();
+
+    Student s = studentBST->find(Student(id, "T Name", "T Level", "T Class", 0.0));
+
+    studentBST->erase(s);
+}
+
+void DatabaseController::deleteFaculty() {
+    cout << "Enter the id of the faculty you would like to DELETE" << endl;
+    int id = getIdFromConsole();
+
+    Faculty f = facultyBST->find(Faculty(id, "T Name", "T Level", "T Class"));
+
+    facultyBST->erase(f);
+}
+
+
 
 
 

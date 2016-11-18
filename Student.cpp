@@ -16,11 +16,16 @@ Student::~Student() {
 
 }
 
-Student::Student(string name, string level, string major, double gpa, int advisorID) : mID(++Total_IDS), mName(name), mLevel(level), mMajor(major), mGPA(gpa), mAdvisorID(advisorID){
+//On Creation constructor
+Student::Student(string name, string level, string major, double gpa) : mID(++Total_IDS), mName(name), mLevel(level), mMajor(major), mGPA(gpa){
 
 }
 
-//Sets id from data
+Student::Student(int id, string name, string level, string major, double gpa) : mID(id), mName(name), mLevel(level), mMajor(major), mGPA(gpa){
+
+}
+
+//On Deserilization constructor
 Student::Student(int id, string name, string level, string major, double gpa, int advisorID) : mID(id), mName(name), mLevel(level), mMajor(major), mGPA(gpa), mAdvisorID(advisorID){
     //Make sure Total_IDS is global max
     if(Total_IDS < id){
@@ -69,6 +74,8 @@ bool operator<(const Student A, const Student &B) {
 bool operator>(const Student A, const Student &B) {
     return (A.mID > B.mID);
 }
+
+
 
 
 
