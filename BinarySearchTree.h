@@ -85,7 +85,7 @@ namespace cpsc350
         void clearer(TreeNode* node); //recursive clear tool
         void inOrderPrinter(TreeNode *node) const;
         void preOrderReturner(TreeNode *node, NodeSequence<Elem>* seq) const;
-        void eraser(TreeNode *node) throw(std::logic_error);
+        TreeNode* eraser(TreeNode *node, const Elem& elem) throw(std::logic_error);
         TreeNode* minNode(TreeNode* node);
 
     };
@@ -177,7 +177,7 @@ namespace cpsc350
     {
         if(node == NULL)
         {
-            throw std::logic_error("Item not found");
+            throw std::logic_error("Item does not exist");
         }
         else if(elem == node->elem_)
         {
@@ -288,12 +288,55 @@ namespace cpsc350
     template <typename Elem>
     void BinarySearchTree<Elem>::erase(const Elem &elem) throw(std::logic_error)
     {
-
+        try
+        {
+            find(elem);
+        }
+        catch (std::logic_error)
+        {
+            throw std::logic_error("Item does not exist");
+        }
+        eraser(root(), elem);
     }
 
     template <typename Elem>
-    void BinarySearchTree<Elem>::eraser(BinarySearchTree::TreeNode *node) throw(std::logic_error)
+    typename BinarySearchTree<Elem>::TreeNode* BinarySearchTree<Elem>::eraser(BinarySearchTree::TreeNode *node, const Elem& elem) throw(std::logic_error)
     {
+        if(node == NULL)
+        {
+            return NULL;
+        }
 
+        if(elem < node->elem_)
+        {
+            node->setLeft(eraser(node->left_, elem));
+        }
+        else if (elem > node->elem_)
+        {
+            node->setRight(eraser(node->right_, elem));
+        }
+
+        else
+        {
+            if (node->left_ == NULL)
+            {
+                TreeNode* temp = node->right_;
+                delete node;
+                return temp;
+            }
+            else if(node->right_ == NULL)
+            {
+                TreeNode* temp = node->left_;
+                delete node;
+                return temp;
+            }
+
+            TreeNode* temp = minNode(node->right_);
+
+            node->elem_ = temp->elem_;
+
+            node->setRight(eraser(node->right_, temp->elem_));
+        }
+        return node;
     }
 }
