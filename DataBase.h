@@ -48,6 +48,7 @@ BinarySearchTree<Elem> *DataBase<Elem>::getRollback()
 template <typename Elem>
 void DataBase<Elem>::backUp(BinarySearchTree* tree)
 {
+    BinarySearchTree<Elem>* newTree = new BinarySearchTree(*tree);
     if(treeHistory->full())
     {
         BinarySearchTree* temp = treeHistory->back();

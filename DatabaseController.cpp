@@ -38,11 +38,11 @@ void DatabaseController::consoleCommand() {
     cin >> command;
 
     if(command == "1"){
-        //Print all students
+        studentBST->inOrderPrint();
         //TODO: Call BST Search Function
     }
     else if(command == "2"){
-        //print all faculty
+        facultyBST->inOrderPrint();
         //TODO: Call BST Search Function
     }
     else if(command == "3"){

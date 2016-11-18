@@ -84,7 +84,7 @@ namespace cpsc350
     }
 
     template <typename Elem>
-    Elem &RingBuffer<Elem>::back()
+    Elem &RingBuffer<Elem>::back() throw(std::logic_error)
     {
         return queue->back();
     }
