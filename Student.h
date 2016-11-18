@@ -18,7 +18,10 @@ public:
     Student();
 
     //Called when constructing for FIRST time, sets id using static var
-    Student(string name, string level, string major, double gpa, int advisorID);
+    Student(string name, string level, string major, double gpa);
+
+    //Called on dummy construction
+    Student(int id, string name, string level, string major, double gpa);
 
     //Called when constructed from existing data, sets id from data
     Student(int id, string name, string level, string major, double gpa, int advisorID);
