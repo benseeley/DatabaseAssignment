@@ -21,16 +21,23 @@ public:
 private:
     //TODO: Add referances to bst
 
+    //Structure Commands
+    void init();
+
+    void consoleCommand();
+    void serializeBST();
+    void deserializeBST();
+
+    //Helper
+    void printAllCommands();
     int getIdFromConsole();
 
+    //Console commands
     void addStudent();
-    void deleteStudent();
     void addFaculty();
+    void deleteStudent();
     void deleteFaculty();
 
-    void init();
-    void consoleCommand();
-    void printAllCommands();
     void findPrintStudent();
     void findPrintFaculty();
     void studentChangeAdvisor();

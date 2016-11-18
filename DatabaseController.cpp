@@ -22,13 +22,33 @@ void DatabaseController::run() {
 
 
 void DatabaseController::init() {
+    ifstream facStream(name.c_str());
+    ifstream studStream(name.c_str());
+
+
+    if(facStream.good()){
+        facStream.close();
+
+    }
+    if(studStream.good()){
+        studStream.close();
+
+    }
+
+}
+
+void DatabaseController::serializeBST() {
     //TODO: Check & Set Students+Faculty from file
     PeopleSerializable streamController;
 
 
     //TODO: Populate BST with people arrays @
+}
+
+void DatabaseController::deserializeStudBST() {
 
 }
+
 
 //Main option selector for Database
 void DatabaseController::consoleCommand() {
@@ -243,6 +263,8 @@ void DatabaseController::facultyRemoveAdvisee() {
 
     studentBST->find(Student(studID, "T Name", "T Level", "T Class", 0.0)).changeAdvisor(0);
 }
+
+
 
 
 
