@@ -3,5 +3,5 @@ project(DatabaseAssignment)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES main.cpp RingBuffer.h DLinkedList.h Stack.h Sequence.h Student.cpp Student.h Faculty.cpp Faculty.h json.hpp PeopleSerializable.cpp PeopleSerializable.h DatabaseController.cpp DatabaseController.h DataBase.cpp DataBase.h BinarySearchTree.h BST.h Dequeue.h)
+set(SOURCE_FILES main.cpp RingBuffer.h DLinkedList.h Stack.h Sequence.h Student.cpp Student.h Faculty.cpp Faculty.h json.hpp PeopleSerializable.cpp PeopleSerializable.h DatabaseController.cpp DatabaseController.h DataBase.h BinarySearchTree.h Dequeue.h)
 add_executable(DatabaseAssignment ${SOURCE_FILES})

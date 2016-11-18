@@ -5,11 +5,13 @@
 #ifndef DATABASEASSIGNMENT_BINARYTREE_H
 #define DATABASEASSIGNMENT_BINARYTREE_H
 
-#endif //DATABASEASSIGNMENT_BINARYTREE_H
-
 #include "stdlib.h"
 #include "Sequence.h"
 #include "stdexcept"
+
+#endif //DATABASEASSIGNMENT_BINARYTREE_H
+
+
 
 namespace cpsc350
 {

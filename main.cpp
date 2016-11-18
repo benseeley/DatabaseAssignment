@@ -1,7 +1,9 @@
 #include <iostream>
+#include "RingBuffer.h"
 #include "PeopleSerializable.h"
 #include "BinarySearchTree.h"
 #include "DatabaseController.h"
+
 #include <iostream>
 
 
@@ -10,8 +12,16 @@ using namespace std;
 
 int main()
 {
+    RingBuffer<int>* rb = new RingBuffer<int>(3);
+    rb->push(5);
+    rb->push(4);
+    rb->push(2);
+    rb->push(1);
+
     Student * stud = new Student(122, "ben", "soph", "cs", 3.8, 1232341);
     cout << *stud << endl;
+    delete stud;
+    delete rb;
     //There should only be one DB controller
     DatabaseController* dbCont;
 

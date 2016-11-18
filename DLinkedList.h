@@ -5,9 +5,9 @@
 #ifndef DATABASEASSIGNMENT_DLINKEDLIST_H
 #define DATABASEASSIGNMENT_DLINKEDLIST_H
 
-#endif //DATABASEASSIGNMENT_DLINKEDLIST_H
-
 #include <iostream>
+
+
 
 namespace cpsc350
 {
@@ -209,3 +209,4 @@ namespace cpsc350
 
 }
 
+#endif //DATABASEASSIGNMENT_DLINKEDLIST_H

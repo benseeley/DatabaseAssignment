@@ -5,15 +5,61 @@
 #ifndef DATABASEASSIGNMENT_DATABASE_H
 #define DATABASEASSIGNMENT_DATABASE_H
 
+
+#include "BinarySearchTree.h"
+#include "RingBuffer.h"
+
+using namespace cpsc350;
+
 template <typename Elem>
 class DataBase
 {
 public:
-    DataBase();
+    DataBase(int historySize = 5);
     ~DataBase();
-    void insert(const Elem& elem);
-    void erase(const Elem& elem);
+    BinarySearchTree<Elem>* getRollback();
+    void backUp(BinarySearchTree* tree);
+    bool empty() { return treeHistory->empty();}
+
+private:
+    RingBuffer<BinarySearchTree<Elem>*>* treeHistory;
 };
+
+template <typename Elem>
+DataBase<Elem>::DataBase(int historySize)
+{
+    treeHistory = new RingBuffer<BinarySearchTree<Elem>*>();
+}
+
+template <typename Elem>
+DataBase<Elem>::~DataBase()
+{
+    delete treeHistory;
+}
+
+template <typename Elem>
+BinarySearchTree<Elem> *DataBase<Elem>::getRollback()
+{
+    BinarySearchTree<Elem>* temp = treeHistory->peek();
+    treeHistory->pop();
+    return temp;
+}
+
+template <typename Elem>
+void DataBase<Elem>::backUp(BinarySearchTree* tree)
+{
+    if(treeHistory->full())
+    {
+        BinarySearchTree* temp = treeHistory->back();
+        treeHistory->push(tree);
+        delete temp;
+        return;
+    }
+    else
+    {
+        treeHistory->push(tree);
+    }
+}
 
 
 #endif //DATABASEASSIGNMENT_DATABASE_H

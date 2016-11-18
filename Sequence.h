@@ -5,10 +5,11 @@
 #ifndef DATABASEASSIGNMENT_SEQUENCE_H
 #define DATABASEASSIGNMENT_SEQUENCE_H
 
-#endif //DATABASEASSIGNMENT_SEQUENCE_H
-
 #include "DLinkedList.h"
 #include <stdexcept>
+
+
+
 
 namespace cpsc350
 {
@@ -87,3 +88,5 @@ namespace cpsc350
     }
 
 }
+
+#endif //DATABASEASSIGNMENT_SEQUENCE_H

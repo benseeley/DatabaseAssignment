@@ -4,8 +4,10 @@
 
 #ifndef DATABASEASSIGNMENT_DEQUEUE_H
 #define DATABASEASSIGNMENT_DEQUEUE_H
-
 #include "DLinkedList.h"
+
+
+
 
 namespace cpsc350
 {
@@ -42,5 +44,5 @@ namespace cpsc350
 }
 
 
-
 #endif //DATABASEASSIGNMENT_DEQUEUE_H
+

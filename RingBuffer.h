@@ -17,19 +17,21 @@ namespace cpsc350
     public:
         RingBuffer(int size = 5);
         ~RingBuffer();
-        void push(Elem& elem);
+        void push(const Elem& elem);
         void pop() throw(std::logic_error);
         Elem& peek() throw(std::logic_error);
+        Elem& back() throw(std::logic_error);
+        bool empty();
         bool full();
 
     private:
         int capacity_;
         int num_elements_;
-        Dequeue *queue;
+        Dequeue<Elem> *queue;
     };
 
     template <typename Elem>
-    RingBuffer::RingBuffer(int size)
+    RingBuffer<Elem>::RingBuffer(int size)
     {
         capacity_ = size;
         num_elements_ = 0;
@@ -37,13 +39,13 @@ namespace cpsc350
     }
 
     template <typename Elem>
-    RingBuffer::~RingBuffer()
+    RingBuffer<Elem>::~RingBuffer()
     {
         delete queue;
     }
 
     template <typename Elem>
-    void RingBuffer::push(Elem& elem)
+    void RingBuffer<Elem>::push(const Elem& elem)
     {
         if(num_elements_ < capacity_)
         {
@@ -58,19 +60,32 @@ namespace cpsc350
     }
 
     template <typename Elem>
-    void RingBuffer::pop() throw(std::logic_error)
+    void RingBuffer<Elem>::pop() throw(std::logic_error)
     {
         queue->removeFront();
     }
 
     template <typename Elem>
-    Elem& RingBuffer::peek() throw(std::logic_error)
+    Elem& RingBuffer<Elem>::peek() throw(std::logic_error)
     {
         queue->front();
     }
 
-    bool RingBuffer::full()
+    template <typename Elem>
+    bool RingBuffer<Elem>::empty()
     {
-        return (num_elements_ == capacity_);
+        return (num_elements_ == 0);
+    }
+
+    template <typename Elem>
+    bool RingBuffer<Elem>::full()
+    {
+        return num_elements_ == capacity_;
+    }
+
+    template <typename Elem>
+    Elem &RingBuffer<Elem>::back()
+    {
+        return queue->back();
     }
 }
