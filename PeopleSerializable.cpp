@@ -97,8 +97,6 @@ Faculty PeopleSerializable::deserializeFaculty(std::string jString) {
     string level = j.at("level");
     string department = j.at("department");
 
-    //TODO: Json is returning bool (since id is 1) insdead of an array of ints;
-
     int numOfAdvisees = j.at("numOfAdvisees");
     int* adviseeArr = new int[numOfAdvisees];;
 
@@ -168,15 +166,4 @@ void PeopleSerializable::closeFile() {
 
     streamFlag = false;
 }
-
-
-
-
-
-
-/**
- *
- *
- */
-
 

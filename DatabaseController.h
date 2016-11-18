@@ -26,7 +26,6 @@ private:
 
     void consoleCommand();
     void serializeBST();
-    void deserializeBST();
 
     //Helper
     void printAllCommands();

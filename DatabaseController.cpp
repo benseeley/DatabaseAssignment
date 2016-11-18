@@ -23,16 +23,23 @@ void DatabaseController::run() {
 
 
 void DatabaseController::init() {
-    ifstream facStream("masterFaculty.txt");
-    ifstream studStream("masterStudent.txt");
+    ifstream facStream("facultyTable.txt");
+    ifstream studStream("studentTable.txt");
 
     PeopleSerializable PS;
 
+    cout << "Running init" << endl;
+
     //Check for file
-    if(facStream.good()){
+    //if(facStream.good()){
         facStream.close();
 
-        PS.setFile(PeopleSerializable::sudentFile);
+        cout << "************************************\n"
+             << "***Deserializing Faculty into BST***\n"
+             << "************************************\n"
+             << endl;
+
+        PS.setFile(PeopleSerializable::facultyFile);
 
         //Deserialize Faculty Data
         vector<Faculty>* f = PS.deserializeFacultyFromStream();
@@ -43,11 +50,16 @@ void DatabaseController::init() {
         }
 
         PS.closeFile();
-    }
+    //}
 
     //Check for File
-    if(studStream.good()){
+    //if(studStream.good()){
         studStream.close();
+
+        cout << "************************************\n"
+             << "***Deserializing Student into BST***\n"
+             << "************************************\n"
+             << endl;
 
         PS.setFile(PeopleSerializable::sudentFile);
 
@@ -61,7 +73,8 @@ void DatabaseController::init() {
         }
 
         PS.closeFile();
-    }
+    //1
+    //}
 
 }
 
@@ -70,6 +83,8 @@ void DatabaseController::serializeBST() {
     PeopleSerializable PS;
 
     if(studentBST->size() > 0){
+
+        cout << "Serializing Student BST to \"studentTable.txt\"" << endl;
 
         PS.setFile(PeopleSerializable::sudentFile);
 
@@ -85,6 +100,8 @@ void DatabaseController::serializeBST() {
     }
 
     if(facultyBST->size() > 0){
+
+        cout << "Serializing Faculty BST to \"facultyTable.txt\"" << endl;
 
         PS.setFile(PeopleSerializable::facultyFile);
 
@@ -172,11 +189,12 @@ void DatabaseController::consoleCommand() {
     }
     else if(command == "14"){
         //Exit
+        cout << "Exiting and Serializing BST" << endl;
+        serializeBST();
         return;
     }
     else{
         cout << "Error : Enter a valid command" << endl;
-        consoleCommand();
     }
     consoleCommand();
 }
