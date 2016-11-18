@@ -63,6 +63,7 @@ namespace cpsc350
 
     public:
         BinarySearchTree();
+        BinarySearchTree(const BinarySearchTree& tree);
         ~BinarySearchTree();
 
         void insert(const Elem& elem) throw(std::logic_error);
@@ -80,7 +81,7 @@ namespace cpsc350
         int n_; //number of nodes in tree
         TreeNode* root_;
         void inserter(TreeNode* node, const Elem& elem) throw(std::logic_error); //recursive insertion tool
-        Elem& finder(TreeNode* node, const Elem& elem) throw(std::logic_error); //recursive find tool
+        TreeNode* finder(TreeNode* node, const Elem& elem) throw(std::logic_error); //recursive find tool
         void clearer(TreeNode* node); //recursive clear tool
         void inOrderPrinter(TreeNode *node) const;
         void preOrderReturner(TreeNode *node, NodeSequence<Elem>* seq) const;
@@ -94,6 +95,17 @@ namespace cpsc350
     {
         n_ = 0;
         root_ = NULL;
+    }
+
+    template <typename Elem>
+    BinarySearchTree<Elem>::BinarySearchTree(const BinarySearchTree &tree)
+    {
+        NodeSequence<Elem>* nodeSequence = tree.toSequence();
+        for(int i = 0; i < nodeSequence->size(); ++i)
+        {
+            this->insert(nodeSequence[i]);
+        }
+        delete nodeSequence;
     }
 
     template <typename Elem>
@@ -113,6 +125,7 @@ namespace cpsc350
         else
         {
             inserter(root_, elem);
+            n_++;
         }
     }
 
@@ -159,11 +172,11 @@ namespace cpsc350
     template <typename Elem>
     Elem &BinarySearchTree<Elem>::find(const Elem& elem) throw(std::logic_error)
     {
-        return finder(root_, elem);
+        return finder(root_, elem)->elem_;
     }
 
     template <typename Elem>
-    Elem &BinarySearchTree<Elem>::finder(BinarySearchTree<Elem>::TreeNode *node, const Elem &elem) throw(std::logic_error)
+    typename BinarySearchTree<Elem>::TreeNode* BinarySearchTree<Elem>::finder(BinarySearchTree<Elem>::TreeNode *node, const Elem &elem) throw(std::logic_error)
     {
         if(node == NULL)
         {
@@ -171,7 +184,7 @@ namespace cpsc350
         }
         else if(elem == node->elem_)
         {
-            return node->elem_;
+            return node;
         }
         else if(elem < node->elem_)
         {
@@ -260,5 +273,13 @@ namespace cpsc350
             seq->insertBack(node->elem_);
             inOrderPrinter(node->right_);
         }
+    }
+
+    template <typename Elem>
+    void BinarySearchTree<Elem>::erase(const Elem &elem) throw(std::logic_error)
+    {
+        TreeNode* nodeToDelete = finder(root_, elem);
+
+
     }
 }
