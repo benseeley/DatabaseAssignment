@@ -7,6 +7,8 @@
 
 #endif //DATABASEASSIGNMENT_RINGBUFFER_H
 
+#include "Dequeue.h"
+
 namespace cpsc350
 {
     template <typename Elem>
@@ -15,59 +17,56 @@ namespace cpsc350
     public:
         RingBuffer(int size = 5);
         ~RingBuffer();
-        void push(Elem elem);
-        void pop();
-        Elem& peek();
+        void push(Elem& elem);
+        void pop() throw(std::logic_error);
+        Elem& peek() throw(std::logic_error);
         bool full();
 
     private:
         int capacity_;
         int num_elements_;
-        int head;
-        int tail;
-        Elem* data_array;
-        int getHead();
-        int getTail();
+        Dequeue *queue;
     };
 
     template <typename Elem>
     RingBuffer::RingBuffer(int size)
     {
-        data_array = new Elem[size];
         capacity_ = size;
         num_elements_ = 0;
+        queue = new Dequeue<Elem>();
     }
 
     template <typename Elem>
     RingBuffer::~RingBuffer()
     {
-        delete data_array;
+        delete queue;
     }
 
     template <typename Elem>
-    void RingBuffer::push(Elem elem)
+    void RingBuffer::push(Elem& elem)
     {
-        if(full())
+        if(num_elements_ < capacity_)
         {
-            data_array[(head++) % (capacity_-1)] = elem;
+            queue->insertBack(elem);
+            num_elements_++;
         }
         else
         {
-            data_array[(head++) % (capacity_-1)] = elem;
-            num_elements_++;
+            queue->removeFront();
+            queue->insertBack(elem);
         }
     }
 
     template <typename Elem>
-    void RingBuffer::pop()
+    void RingBuffer::pop() throw(std::logic_error)
     {
-
+        queue->removeFront();
     }
 
     template <typename Elem>
-    Elem& RingBuffer::peek()
+    Elem& RingBuffer::peek() throw(std::logic_error)
     {
-
+        queue->front();
     }
 
     bool RingBuffer::full()

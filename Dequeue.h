@@ -17,12 +17,12 @@ namespace cpsc350
         ~Dequeue();
         void insertFront(const Elem& elem) { list_->insertFront(elem); }
         void insertBack(const Elem& elem) { list_->insertBack(elem); }
-        void removeFront() { list_->eraseFront(); }
-        void removeBack() { list_->eraseBack(); }
+        void removeFront() throw(std::logic_error) { list_->eraseFront(); }
+        void removeBack() throw(std::logic_error) { list_->eraseBack(); }
         bool empty() { return list_->empty(); }
         int size(){ return list_->size(); }
-        Elem& front() { return list_->front(); }
-        Elem& back() { return list_->back(); }
+        Elem& front() throw(std::logic_error) { return list_->front(); }
+        Elem& back() throw(std::logic_error) { return list_->back(); }
 
     private:
         DLinkedList<Elem>* list_;

@@ -8,6 +8,7 @@
 #endif //DATABASEASSIGNMENT_BINARYTREE_H
 
 #include "stdlib.h"
+#include "Sequence.h"
 #include "stdexcept"
 
 namespace cpsc350
@@ -39,7 +40,6 @@ namespace cpsc350
             {
                 right_ = pos;
                 pos->parent_ = this;
-
             }
             void setLeft(TreeNode* pos)
             {
@@ -71,6 +71,8 @@ namespace cpsc350
         int size() const;
         bool empty() const;
         TreeNode* root() const;
+        void inOrderPrint() const;
+        NodeSequence<Elem>* toSequence() const;
 
     private:
         int n_; //number of nodes in tree
@@ -78,6 +80,8 @@ namespace cpsc350
         void inserter(TreeNode* node, const Elem& elem) throw(std::logic_error); //recursive insertion tool
         Elem& finder(TreeNode* node, const Elem& elem) throw(std::logic_error); //recursive find tool
         void clearer(TreeNode* node); //recursive clear tool
+        void inOrderPrinter(TreeNode *node) const;
+        void preOrderReturner(TreeNode *node, NodeSequence<Elem>* seq) const;
 
     };
 
@@ -208,6 +212,50 @@ namespace cpsc350
             clearer(node->left_);
             clearer(node->right_);
             delete node;
+        }
+    }
+
+    template <typename Elem>
+    void BinarySearchTree<Elem>::inOrderPrint() const
+    {
+        inOrderPrinter(root_);
+    }
+
+
+    template <typename Elem>
+    void BinarySearchTree<Elem>::inOrderPrinter(BinarySearchTree<Elem>::TreeNode *node) const
+    {
+        if(node == NULL)
+        {
+            return;
+        }
+        else
+        {
+            inOrderPrinter(node->left_);
+            cout << node << endl;
+            inOrderPrinter(node->right_);
+        }
+    }
+
+    template <typename Elem>
+    NodeSequence<Elem> *BinarySearchTree<Elem>::toSequence() const
+    {
+        NodeSequence<Elem>* temp = new NodeSequence<Elem>();
+
+    }
+
+    template <typename Elem>
+    void BinarySearchTree<Elem>::preOrderReturner(BinarySearchTree<Elem>::TreeNode *node, NodeSequence<Elem> *seq) const
+    {
+        if(node == NULL)
+        {
+            return;
+        }
+        else
+        {
+            inOrderPrinter(node->left_);
+            seq->insertBack(node->elem_);
+            inOrderPrinter(node->right_);
         }
     }
 }

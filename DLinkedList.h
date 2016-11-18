@@ -63,8 +63,8 @@ namespace cpsc350
         void insertFront(const Elem& elem);
         void insertBack(const Elem& elem);
         void insert(const DLinkedIterator& pos, const Elem& elem); //inserts e before p
-        void eraseFront();
-        void eraseBack();
+        void eraseFront() throw(std::logic_error);
+        void eraseBack() throw(std::logic_error);
         void erase(const DLinkedIterator& pos);
 
     private:
@@ -181,15 +181,30 @@ namespace cpsc350
     }
 
     template <typename Elem>
-    void DLinkedList<Elem>::eraseFront()
+    void DLinkedList<Elem>::eraseFront() throw(std::logic_error)
     {
-        erase(begin());
+        if(!empty())
+        {
+            erase(begin());
+        }
+        else
+        {
+            throw std::logic_error("List is empty");
+        }
     }
 
     template <typename Elem>
-    void DLinkedList<Elem>::eraseBack()
+    void DLinkedList<Elem>::eraseBack() throw(std::logic_error)
     {
-        erase(--end());
+        if(!empty())
+        {
+            erase(--end());
+        }
+        else
+        {
+            throw std::logic_error("List is empty");
+        }
+
     }
 
 }

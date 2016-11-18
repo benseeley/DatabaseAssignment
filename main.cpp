@@ -1,5 +1,4 @@
 #include <iostream>
-#include "Sequence.h"
 #include "PeopleSerializable.h"
 #include "BinarySearchTree.h"
 #include "DatabaseController.h"
