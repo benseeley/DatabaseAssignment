@@ -6,7 +6,7 @@
 #define DATABASEASSIGNMENT_DLINKEDLIST_H
 
 #include <iostream>
-
+#include "stdlib.h"
 
 
 namespace cpsc350
@@ -78,8 +78,8 @@ namespace cpsc350
     DLinkedList<Elem>::DLinkedList()
     {
         n_ = 0;
-        header_ = new Node;
-        trailer_ = new Node;
+        header_ = new Node();
+        trailer_ = new Node();
         header_->next = trailer_;
         trailer_->prev = header_;
     }
@@ -91,9 +91,6 @@ namespace cpsc350
         {
             eraseFront();
         }
-        delete header_;
-        delete trailer_;
-
     }
 
     template <typename Elem>
@@ -137,9 +134,6 @@ namespace cpsc350
         Node* w = pos.node_;
 
         Node* u = w->prev;
-        if(u != header_){std::cout << u << std::endl;
-            std::cout << header_ << std::endl;}
-
 
         Node* v = new Node;
 

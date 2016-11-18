@@ -16,6 +16,15 @@ public:
     static int Total_IDS;
     int mID;
     Student();
+    Student(const Student& stud)
+    {
+        mID = stud.mID;
+        mName = stud.mName;
+        mLevel = stud.mLevel;
+        mMajor = stud.mMajor;
+        mGPA = stud.mGPA;
+        mAdvisorID = stud.mAdvisorID;
+    }
 
     //Called when constructing for FIRST time, sets id using static var
     Student(string name, string level, string major, double gpa);
@@ -38,6 +47,7 @@ public:
     friend bool operator==(const Student A, const Student& B);
     friend bool operator<(const Student A, const Student& B);
     friend bool operator>(const Student A, const Student& B);
+
     friend std::ostream& operator<<(std::ostream& os, const Student& obj)
     {
         os << obj.toString();
@@ -50,8 +60,8 @@ public:
     //To strings and json conversion
     const string toString() const;
     virtual string getJson() const;
-    ;
-private:
+
+protected:
     string mName;
     string mLevel;
     string mMajor;

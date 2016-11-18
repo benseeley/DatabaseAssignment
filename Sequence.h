@@ -23,6 +23,9 @@ namespace cpsc350
     public:
         NodeSequence();
         ~NodeSequence();
+        NodeSequence(const NodeSequence<Elem>& seq) : DLinkedList<Elem>(seq)
+        {
+        }
         Elem* toArray();
 
         typename DLinkedList<Elem>::DLinkedIterator atIndex(int idx) const; //returns iterator at given index

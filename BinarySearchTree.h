@@ -41,11 +41,13 @@ namespace cpsc350
             void setRight(TreeNode* pos)
             {
                 right_ = pos;
+                if(pos!=NULL)
                 pos->parent_ = this;
             }
             void setLeft(TreeNode* pos)
             {
                 left_ = pos;
+                if(pos!=NULL)
                 pos->parent_ = this;
             }
 
@@ -76,6 +78,7 @@ namespace cpsc350
         TreeNode* root() const;
         void inOrderPrint() const;
         NodeSequence<Elem>* toSequence() const;
+        Elem* toArray() const;
 
     private:
         int n_; //number of nodes in tree
@@ -101,12 +104,31 @@ namespace cpsc350
     template <typename Elem>
     BinarySearchTree<Elem>::BinarySearchTree(const BinarySearchTree &tree)
     {
+        n_ = 0;
+        root_ = NULL;
         NodeSequence<Elem>* nodeSequence = tree.toSequence();
         for(int i = 0; i < nodeSequence->size(); ++i)
         {
-            this->insert((nodeSequence)->operator[](i).operator*());
+            Elem elem = Elem(nodeSequence->atIndex(i).operator*());
+            this->insert(elem);
         }
         delete nodeSequence;
+    }
+
+    template <typename Elem>
+    NodeSequence<Elem> *BinarySearchTree<Elem>::toSequence() const
+    {
+        NodeSequence<Elem>* temp = new NodeSequence<Elem>();
+        preOrderReturner(root_, temp);
+        return temp;
+
+    }
+
+    template <typename Elem>
+    Elem *BinarySearchTree<Elem>::toArray() const
+    {
+        Elem* temp = new Elem[size()];
+
     }
 
     template <typename Elem>
@@ -122,6 +144,7 @@ namespace cpsc350
         {
             root_ = new TreeNode(elem);
             n_++;
+            return;
         }
         else
         {
@@ -250,14 +273,6 @@ namespace cpsc350
         }
     }
 
-    template <typename Elem>
-    NodeSequence<Elem> *BinarySearchTree<Elem>::toSequence() const
-    {
-        NodeSequence<Elem>* temp = new NodeSequence<Elem>();
-        preOrderReturner(root_, temp);
-        return temp;
-
-    }
 
     template <typename Elem>
     void BinarySearchTree<Elem>::preOrderReturner(BinarySearchTree<Elem>::TreeNode *node, NodeSequence<Elem> *seq) const

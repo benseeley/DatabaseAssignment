@@ -21,6 +21,15 @@ public:
     //Called when constructing for FIRST time, sets id using static var
     Faculty(string name, string level, string department);
 
+    Faculty(const Faculty& fac)
+    {
+        mID = fac.mID;
+        mName = fac.mName;
+        mLevel = fac.mLevel;
+        mDepartment = fac.mLevel;
+        pAdviseesIDS = new NodeSequence<int>(*fac.pAdviseesIDS);
+    }
+
     Faculty(int id, string name, string level, string department);
 
     //Called when constructed from existing data, sets id from data

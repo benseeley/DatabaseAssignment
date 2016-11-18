@@ -26,6 +26,8 @@ DatabaseController::~DatabaseController() {}
 
 void DatabaseController::run() {
     init();
+    studentDataBase->backUp((new BinarySearchTree<Student>(*studentBST)));
+    facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
     consoleCommand();
 }
 
@@ -183,8 +185,6 @@ void DatabaseController::consoleCommand() {
     else if(command == "5"){
         //Given a student’s id, print the name and info of their faculty advisor TODO:@copp
         findPrintStudentAdvisor();
-
-
     }
     else if(command == "6"){
         //Given a faculty id, print ALL the names and info of his/her advisees. TODO:@copp
@@ -194,6 +194,7 @@ void DatabaseController::consoleCommand() {
     else if(command == "7"){
         //Add a new student TODO:CONTACT TEAM MEMBER
         addStudent();
+        cout << "test" << endl;
         studentDataBase->backUp((new BinarySearchTree<Student>(*studentBST)));
         facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
 
@@ -201,40 +202,40 @@ void DatabaseController::consoleCommand() {
     else if(command == "8"){
         //Delete a student given the id, TODO:CONTACT TEAM MEMBER
         addFaculty();
-        //studentDataBase->backUp((new BinarySearchTree<Student>(*studentBST)));
-        //facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
+        studentDataBase->backUp((new BinarySearchTree<Student>(*studentBST)));
+        facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
     }
     else if(command == "9"){
         //Add a new faculty member TODO:CONTACT TEAM MEMBER
         deleteStudent();
-        //studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
-        //facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
+        studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
+        facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
 
     }
     else if(command == "10"){
         //Delete a faculty member given the id. TODO:CONTACT TEAM MEMBER
         deleteFaculty();
-        //studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
-        //facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
+        studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
+        facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
 
     }
     else if(command == "11"){
         //Change a student’s advisor given the student id and the new faculty id. @TODO:copp
         studentChangeAdvisor();
-        //studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
-        //facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
+        studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
+        facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
 
     }
     else if(command == "12"){
         //Remove an advisee from a faculty member given the ids TODO:@copp
         facultyRemoveAdvisee();
-        //studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
-        //facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
+        studentDataBase->backUp(new BinarySearchTree<Student>(*studentBST));
+        facultyDataBase->backUp(new BinarySearchTree<Faculty>(*facultyBST));
     }
     else if(command == "13"){
         //Rollback TODO:@ben
-        //facultyBST = facultyDataBase->getRollback();
-        //studentBST = studentDataBase->getRollback();
+        facultyBST = facultyDataBase->getRollback();
+        studentBST = studentDataBase->getRollback();
     }
     else if(command == "14"){
         //Exit
@@ -288,17 +289,32 @@ void DatabaseController::printAllCommands() {
 void DatabaseController::findPrintStudent() {
     cout << "Enter the id of the student you would like to display" << endl;
     int id = getIdFromConsole();
+    try
+    {
+        string toS = studentBST->find(Student(id, "T Name", "T Level", "T Class", 0.0, 0)).toString();
+        cout << toS << endl;
+    }
+    catch (std::logic_error)
+    {
+        cout << "Student does not exist" << endl;
+    }
 
-    string toS = studentBST->find(Student(id, "T Name", "T Level", "T Class", 0.0, 0)).toString();
-    cout << toS << endl;
 }
 
 void DatabaseController::findPrintFaculty() {
     cout << "Enter the id of the faculty you would like to display" << endl;
     int id = getIdFromConsole();
 
-    string toS = facultyBST->find(Faculty(id, "T Name", "T Level", "T Class")).toString();
-    cout << toS << endl;
+    try
+    {
+        string toS = facultyBST->find(Faculty(id, "T Name", "T Level", "T Class")).toString();
+        cout << toS << endl;
+    }
+    catch (std::logic_error)
+    {
+        cout << "Faculty does not exist" << endl;
+    }
+
 }
 
 void DatabaseController::addStudent() {
@@ -355,19 +371,36 @@ void DatabaseController::addFaculty() {
 void DatabaseController::deleteStudent() {
     cout << "Enter the id of the student you would like to DELETE" << endl;
     int id = getIdFromConsole();
+    try
+    {
+        Student& s = studentBST->find(Student(id, "T Name", "T Level", "T Class", 0.0));
 
-    Student& s = studentBST->find(Student(id, "T Name", "T Level", "T Class", 0.0));
+        studentBST->erase(s);
+    }
+    catch (std::logic_error)
+    {
+        cout << "Student does not exist" << endl;
+    }
 
-    studentBST->erase(s);
+
+
 }
 
 void DatabaseController::deleteFaculty() {
     cout << "Enter the id of the faculty you would like to DELETE" << endl;
     int id = getIdFromConsole();
+    try
+    {
+        Faculty& f = facultyBST->find(Faculty(id, "T Name", "T Level", "T Class"));
 
-    Faculty& f = facultyBST->find(Faculty(id, "T Name", "T Level", "T Class"));
+        facultyBST->erase(f);
+    }
+    catch (std::logic_error)
+    {
+        cout << "Student does not exist" << endl;
+    }
 
-    facultyBST->erase(f);
+
 }
 
 void DatabaseController::studentChangeAdvisor() {
@@ -377,22 +410,31 @@ void DatabaseController::studentChangeAdvisor() {
     cout << "Enter this students new advisor id" << endl;
     int newAdvisorID = getIdFromConsole();
 
-    //Search with dummy objects
-    Student& s = studentBST->find(Student(studID, "T Name", "T Level", "T Class", 0.0));
-    Faculty& f = facultyBST->find(Faculty(newAdvisorID, "T Name", "T Level", "T Class"));
+    try
+    {
+        //Search with dummy objects
+                Student& s = studentBST->find(Student(studID, "T Name", "T Level", "T Class", 0.0));
+                Faculty& f = facultyBST->find(Faculty(newAdvisorID, "T Name", "T Level", "T Class"));
 
 
-    //Find/Remove old ID
-    int oldFacultyID = s.getAdvisorID();
-    //Checks to see if faculty exists
-    if(oldFacultyID != 0){
-        Faculty& fOld = facultyBST->find(Faculty(oldFacultyID, "T Name", "T Level", "T Class"));
-        fOld.removeStudentID(studID);
+                //Find/Remove old ID
+                int oldFacultyID = s.getAdvisorID();
+                //Checks to see if faculty exists
+                if(oldFacultyID != 0){
+                    Faculty& fOld = facultyBST->find(Faculty(oldFacultyID, "T Name", "T Level", "T Class"));
+                    fOld.removeStudentID(studID);
+                }
+
+                //Change ids
+                s.changeAdvisor(newAdvisorID);
+                f.addStudentID(studID);
+    }
+    catch (std::logic_error)
+    {
+        cout << "Student does not exist" << endl;
     }
 
-    //Change ids
-    s.changeAdvisor(newAdvisorID);
-    f.addStudentID(studID);
+
 }
 
 void DatabaseController::facultyRemoveAdvisee() {
@@ -402,22 +444,39 @@ void DatabaseController::facultyRemoveAdvisee() {
     cout << "\nEnter the id of the advisee you would like to REMOVE";
     int studID = getIdFromConsole();
 
-    //Removes student with id
-    facultyBST->find(Faculty(facID, "T Name", "T Level", "T Class")).removeStudentID(studID);
+    try
+    {
+        //Removes student with id
+        facultyBST->find(Faculty(facID, "T Name", "T Level", "T Class")).removeStudentID(studID);
 
-    studentBST->find(Student(studID, "T Name", "T Level", "T Class", 0.0)).changeAdvisor(0);
+        studentBST->find(Student(studID, "T Name", "T Level", "T Class", 0.0)).changeAdvisor(0);
+    }
+    catch (std::logic_error)
+    {
+        cout << "Faculty does not exist" << endl;
+    }
+
 }
 
 void DatabaseController::findPrintStudentAdvisor()
 {
     cout << "Enter the id of the student you would like to display the advisor of" << endl;
     int id = getIdFromConsole();
-    Student student = studentBST->find(Student(id, "T Name", "T Level", "T Class", 0.0, 0));
 
-    int advisorID = student.getAdvisorID();
+    try
+    {
+        Student student = studentBST->find(Student(id, "T Name", "T Level", "T Class", 0.0, 0));
 
-    string toS = facultyBST->find(Faculty(advisorID, "T Name", "T Level", "T Class")).toString();
-    cout << toS << endl;
+        int advisorID = student.getAdvisorID();
+
+        string toS = facultyBST->find(Faculty(advisorID, "T Name", "T Level", "T Class")).toString();
+        cout << toS << endl;
+    }
+    catch (std::logic_error)
+    {
+        cout << "Student does not exist" << endl;
+    }
+
 }
 
 void DatabaseController::findPrintFacultyAdvisees()
@@ -425,15 +484,23 @@ void DatabaseController::findPrintFacultyAdvisees()
     cout << "Enter the id of the faculty you would like to display the advisees of" << endl;
     int id = getIdFromConsole();
 
-    Faculty faculty = facultyBST->find(Faculty(id, "T Name", "T Level", "T Class"));
-
-    int* studentIDs = faculty.getAdviseeIDs().toArray();
-
-    for(int i = 0; i < faculty.getAdviseeIDs().size(); ++i)
+    try
     {
-        Student stud = studentBST->find(Student(studentIDs[i], "T Name", "T Level", "T Class", 0.0, 0));
-        cout << stud.toString() << endl;
+        Faculty faculty = facultyBST->find(Faculty(id, "T Name", "T Level", "T Class"));
+
+        int* studentIDs = faculty.getAdviseeIDs().toArray();
+
+        for(int i = 0; i < faculty.getAdviseeIDs().size(); ++i)
+        {
+            Student stud = studentBST->find(Student(studentIDs[i], "T Name", "T Level", "T Class", 0.0, 0));
+            cout << stud.toString() << endl;
+        }
     }
+    catch (std::logic_error)
+    {
+        cout << "Faculty does not exist" << endl;
+    }
+
 
 
 }
