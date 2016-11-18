@@ -43,7 +43,7 @@ void Student::updateAdvisor() {
 
 
 const string Student::toString() const {
-    string toS = "Type : Student, ID : " + to_string(mID) + "\nName : " + mName + ",\nLevel : " + mLevel + ",\nMajor : " + mMajor + ",\nGPA : " + to_string(mGPA) + ",\nAdvisor : " + to_string(mAdvisorID);
+    string toS = "Type : Student, ID : " + to_string(mID) + "\nName : " + mName + ",\nLevel : " + mLevel + ",\nMajor : " + mMajor + ",\nGPA : " + to_string(mGPA) + ",\nAdvisorID : " + to_string(mAdvisorID);
     return toS;
 }
 
