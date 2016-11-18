@@ -7,6 +7,7 @@
 
 using namespace std;
 
+
 void DatabaseController::run() {
     init();
 
@@ -41,14 +42,63 @@ void DatabaseController::consoleCommand() {
         //TODO: Call BST Search Function
     }
     else if(command == "3"){
-        //Display Student (from id)
+        //Find and display student information given the students id TODO:@copp
         findStudent();
 
     }
     else if(command == "4"){
-        //Display Faculty (from id)
+        //Find and display faculty information given the faculty id TODO:@copp
         findFaculty();
 
+    }
+    else if(command == "5"){
+        //Given a student’s id, print the name and info of their faculty advisor TODO:@copp
+
+
+    }
+    else if(command == "6"){
+        //Given a faculty id, print ALL the names and info of his/her advisees. TODO:@copp
+
+
+    }
+    else if(command == "7"){
+        //Add a new student TODO:CONTACT TEAM MEMBER
+
+
+    }
+    else if(command == "8"){
+        //Delete a student given the id, TODO:CONTACT TEAM MEMBER
+
+
+    }
+    else if(command == "9"){
+        //Add a new faculty member TODO:CONTACT TEAM MEMBER
+
+
+    }
+    else if(command == "10"){
+        //Delete a faculty member given the id. TODO:CONTACT TEAM MEMBER
+
+
+    }
+    else if(command == "11"){
+        //Change a student’s advisor given the student id and the new faculty id. @TODO:copp
+
+
+    }
+    else if(command == "12"){
+        //Remove an advisee from a faculty member given the ids TODO:@copp
+
+
+    }
+    else if(command == "13"){
+        //Rollback TODO:@ben
+
+
+    }
+    else if(command == "14"){
+        //Exit
+        return;
     }
     else{
         cout << "Error : Enter a valid command" << endl;

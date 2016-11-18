@@ -2,7 +2,6 @@
 #include "Sequence.h"
 #include "PeopleSerializable.h"
 #include "BinarySearchTree.h"
-#include "bst_test.h"
 #include <iostream>
 
 
