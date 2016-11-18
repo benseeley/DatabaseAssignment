@@ -33,7 +33,7 @@ Faculty::~Faculty() {
 
 }
 
-string Faculty::toString() {
+string Faculty::toString() const {
     string toS = "Type : Faculty, ID : " + to_string(mID) + ",\nLevel : " + mLevel + ",\nDepartement : " + mDepartment + ",\nAdviseesIDS : ";
 
     //Populates toString with adviseesID's
@@ -45,14 +45,14 @@ string Faculty::toString() {
     return toS;
 }
 
-void Faculty::addStudentID(int id) {
+void Faculty::addStudentID(int id){
     //int lastIndex = pAdviseesIDS->size() -1);
 
     pAdviseesIDS->push_back(id);
 
 }
 
-string Faculty::getJson() {
+string Faculty::getJson() const {
     nlohmann::json j;
 
     j["id"] = mID;

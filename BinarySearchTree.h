@@ -82,6 +82,7 @@ namespace cpsc350
         void clearer(TreeNode* node); //recursive clear tool
         void inOrderPrinter(TreeNode *node) const;
         void preOrderReturner(TreeNode *node, NodeSequence<Elem>* seq) const;
+        void erase(const Elem& elem) throw(std::logic_error);
 
     };
 

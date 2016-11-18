@@ -33,11 +33,18 @@ public:
     friend bool operator==(const Student A, const Student& B);
     friend bool operator<(const Student A, const Student& B);
     friend bool operator>(const Student A, const Student& B);
+    friend std::ostream& operator<<(std::ostream& os, const Student& obj)
+    {
+        os << obj.toString();
+
+        return os;
+    }
+
 
 
     //To strings and json conversion
-    const string toString();
-    virtual string getJson();
+    const string toString() const;
+    virtual string getJson() const;
     ;
 private:
     string mName;

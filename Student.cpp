@@ -37,12 +37,12 @@ void Student::updateAdvisor() {
 }
 
 
-const string Student::toString() {
+const string Student::toString() const {
     string toS = "Type : Student, ID : " + to_string(mID) + "\nName : " + mName + ",\nLevel : " + mLevel + ",\nMajor : " + mMajor + ",\nGPA : " + to_string(mGPA) + ",\nAdvisor : " + to_string(mAdvisorID);
     return toS;
 }
 
-std::string Student::getJson() {
+std::string Student::getJson() const {
     nlohmann::json j;
     j["id"] = mID;
     j["name"] = mName;

@@ -10,6 +10,8 @@ using namespace std;
 
 int main()
 {
+    Student * stud = new Student(122, "ben", "soph", "cs", 3.8, 1232341);
+    cout << *stud << endl;
     //There should only be one DB controller
     DatabaseController* dbCont;
 

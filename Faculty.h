@@ -28,8 +28,15 @@ public:
     void addStudentID(int id);
 
     //ToString & JSON Methods
-    string toString();
-    string getJson();
+    string toString() const;
+    string getJson() const;
+
+    friend std::ostream& operator<<(std::ostream& os, const Faculty& obj)
+    {
+        os << obj.toString();
+
+        return os;
+    }
 private:
     string mName;
     string mLevel;
