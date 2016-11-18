@@ -5,6 +5,7 @@
 #include "DatabaseController.h"
 #include "PeopleSerializable.h"
 #include "BinarySearchTree.h"
+#include "Sequence.h"
 
 using namespace std;
 
@@ -22,31 +23,83 @@ void DatabaseController::run() {
 
 
 void DatabaseController::init() {
-    ifstream facStream(name.c_str());
-    ifstream studStream(name.c_str());
+    ifstream facStream("masterFaculty.txt");
+    ifstream studStream("masterStudent.txt");
 
+    PeopleSerializable PS;
 
+    //Check for file
     if(facStream.good()){
         facStream.close();
 
+        PS.setFile(PeopleSerializable::sudentFile);
+
+        //Deserialize Faculty Data
+        vector<Faculty>* f = PS.deserializeFacultyFromStream();
+
+        //Populate Tree
+        for(int i = 0; i < f->size(); i++){
+            facultyBST->insert(f->at(i));
+        }
+
+        PS.closeFile();
     }
+
+    //Check for File
     if(studStream.good()){
         studStream.close();
 
+        PS.setFile(PeopleSerializable::sudentFile);
+
+
+        //Deserilize Student Data
+        vector<Student>* s = PS.deserializeStudentsFromStream();
+
+        //Populate Tree
+        for(int i = 0; i < s->size(); i++){
+            studentBST->insert(s->at(i));
+        }
+
+        PS.closeFile();
     }
 
 }
 
 void DatabaseController::serializeBST() {
-    //TODO: Check & Set Students+Faculty from file
-    PeopleSerializable streamController;
 
+    PeopleSerializable PS;
+
+    if(studentBST->size() > 0){
+
+        PS.setFile(PeopleSerializable::sudentFile);
+
+        cpsc350::NodeSequence<Student>* NSPtr = studentBST->toSequence();
+
+        for(int i = 0; i < NSPtr->size(); i++){
+            Student& s = *(NSPtr->atIndex(i));
+            string toS = s.toString();
+            PS.serializePerson(toS);
+        }
+
+        PS.closeFile();
+    }
+
+    if(facultyBST->size() > 0){
+
+        PS.setFile(PeopleSerializable::facultyFile);
+
+        cpsc350::NodeSequence<Faculty>* NSPtr = facultyBST->toSequence();
+
+        for(int i = 0; i < NSPtr->size(); i++){
+            Faculty& s = *(NSPtr->atIndex(i));
+            string toS = s.toString();
+            PS.serializePerson(toS);
+        }
+
+        PS.closeFile();
+    }
 
     //TODO: Populate BST with people arrays @
-}
-
-void DatabaseController::deserializeStudBST() {
-
 }
 
 
@@ -263,11 +316,3 @@ void DatabaseController::facultyRemoveAdvisee() {
 
     studentBST->find(Student(studID, "T Name", "T Level", "T Class", 0.0)).changeAdvisor(0);
 }
-
-
-
-
-
-
-
-
