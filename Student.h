@@ -30,12 +30,13 @@ public:
     void updateAdvisor();
 
     //Overloaded Operators
-    bool operator==(Student& s);
-    bool operator<(Student& s);
-    bool operator>(Student& s);
+    friend bool operator==(const Student A, const Student& B);
+    friend bool operator<(const Student A, const Student& B);
+    friend bool operator>(const Student A, const Student& B);
+
 
     //To strings and json conversion
-    string toString();
+    const string toString();
     virtual string getJson();
     ;
 private:
