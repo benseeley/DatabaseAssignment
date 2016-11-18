@@ -284,4 +284,16 @@ namespace cpsc350
         }
         return current;
     }
+
+    template <typename Elem>
+    void BinarySearchTree<Elem>::erase(const Elem &elem) throw(std::logic_error)
+    {
+
+    }
+
+    template <typename Elem>
+    void BinarySearchTree<Elem>::eraser(BinarySearchTree::TreeNode *node) throw(std::logic_error)
+    {
+
+    }
 }
