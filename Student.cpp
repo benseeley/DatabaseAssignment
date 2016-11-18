@@ -37,7 +37,7 @@ void Student::updateAdvisor() {
 }
 
 
-string Student::toString() {
+const string Student::toString() {
     string toS = "Type : Student, ID : " + to_string(mID) + "\nName : " + mName + ",\nLevel : " + mLevel + ",\nMajor : " + mMajor + ",\nGPA : " + to_string(mGPA) + ",\nAdvisor : " + to_string(mAdvisorID);
     return toS;
 }
@@ -54,22 +54,21 @@ std::string Student::getJson() {
     return j.dump();
 }
 
-bool Student::operator==(Student& s) {
-    return (this->toString() == s.toString());
+
+//**Operator Overloads**
+
+
+bool operator==(const Student A, const Student& B) {
+    return (A.mID == B.mID);
 }
 
-bool Student::operator<(Student& s) {
-    return(this->mID < s.mID);
+bool operator<(const Student A, const Student &B) {
+    return (A.mID < B.mID);
 }
 
-bool Student::operator>(Student& s) {
-    return(this->mID > s.mID);
+bool operator>(const Student A, const Student &B) {
+    return (A.mID > B.mID);
 }
-
-
-
-
-
 
 
 

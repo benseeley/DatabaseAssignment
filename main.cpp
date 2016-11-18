@@ -2,6 +2,7 @@
 #include "Sequence.h"
 #include "PeopleSerializable.h"
 #include "BinarySearchTree.h"
+#include "DatabaseController.h"
 #include <iostream>
 
 
@@ -10,29 +11,10 @@ using namespace std;
 
 int main()
 {
+    //There should only be one DB controller
+    DatabaseController* dbCont;
 
-    BinarySearchTree<int> *bst = new BinarySearchTree<int>();
-    cout << "test" << endl;
-
-    bst->insert(4);
-    bst->insert(5);
-    bst->insert(1);
-    bst->insert(9);
-    bst->insert(3);
-
-    cout << "test1" << endl;
-
-
-    int x = bst->find(1);
-
-    cout << "test2" << endl;
-
-    cout << x << endl;
-
-    cout << "test" << endl;
-
-    delete bst;
-
+    dbCont->run();
 }
 
 
